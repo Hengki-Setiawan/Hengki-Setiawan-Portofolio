@@ -24,7 +24,10 @@ const N8nChatWidget: React.FC = () => {
         return null;
     }
 
-    const N8N_WEBHOOK_URL = '/api/n8n-chat';
+    // Use proxy in development to avoid CORS issues, use env var in production
+    const N8N_WEBHOOK_URL = import.meta.env.DEV
+        ? '/api/n8n-chat'
+        : (import.meta.env.VITE_N8N_CHAT_URL || 'https://gwu0a4k-n8n.bocindonesia.com/webhook/983f0dda-9bfe-4d09-99b1-e2e55f1f83f4/chat');
     const INITIAL_MESSAGE = "Halo guys aku bot untuk website portofolionya hengki, Ada yang bisa di bantu ?";
 
     // Utility function to strip markdown formatting
