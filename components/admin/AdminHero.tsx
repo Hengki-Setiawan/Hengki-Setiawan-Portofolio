@@ -403,6 +403,31 @@ const AdminHero: React.FC = () => {
                                 </div>
                             </div>
                         </div>
+                        <div className="p-4 bg-slate-50 rounded-lg">
+                            <h3 className="font-medium text-slate-700 mb-3">Badge 3 (Kanan Atas)</h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                <div>
+                                    <label className="block text-sm text-slate-600 mb-1">Emoji</label>
+                                    <input
+                                        type="text"
+                                        value={content.badge_3_emoji || ''}
+                                        onChange={(e) => handleChange('badge_3_emoji', e.target.value)}
+                                        className="w-full px-3 py-2 border border-slate-300 rounded-lg text-slate-900"
+                                        placeholder="🛡️"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm text-slate-600 mb-1">Teks</label>
+                                    <input
+                                        type="text"
+                                        value={content.badge_3_text || ''}
+                                        onChange={(e) => handleChange('badge_3_text', e.target.value)}
+                                        className="w-full px-3 py-2 border border-slate-300 rounded-lg text-slate-900"
+                                        placeholder="Admin Grup Kami"
+                                    />
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

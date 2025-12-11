@@ -22,7 +22,8 @@ import {
     Film,
     Globe,
     Zap,
-    FileText
+    FileText,
+    Rocket
 } from 'lucide-react';
 
 const AdminLayout: React.FC = () => {
