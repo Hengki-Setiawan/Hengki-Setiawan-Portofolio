@@ -1,6 +1,10 @@
 {
     "rewrites": [
         {
+            "source": "/api/n8n-chat",
+            "destination": "https://gwu0a4k-n8n.bocindonesia.com/webhook/983f0dda-9bfe-4d09-99b1-e2e55f1f83f4/chat"
+        },
+        {
             "source": "/(.*)",
             "destination": "/index.html"
         }
