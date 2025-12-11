@@ -1,43 +1,90 @@
-import React from 'react';
-import { Briefcase, ShoppingBag, Users } from 'lucide-react';
-import { ExperienceItem } from '../types';
+import React, { useState, useEffect } from 'react';
+import { Briefcase, ShoppingBag, Users, Loader2 } from 'lucide-react';
 import Reveal from './Reveal';
+import { supabase } from '../lib/supabase';
 
-const experiences: ExperienceItem[] = [
+// Default experiences as fallback
+const defaultExperiences = [
   {
-    id: 1,
+    id: '1',
     title: 'Kaos Kami',
     role: 'Owner & Founder',
     period: 'Sekarang',
     description: 'Membangun brand clothing dari nol. Mengelola seluruh aspek bisnis mulai dari desain produk, manajemen produksi, hingga strategi pemasaran digital.',
-    icon: Briefcase
+    order_index: 0
   },
   {
-    id: 2,
+    id: '2',
     title: 'Komunitas "Kami Depresi dan Bahagia"',
     role: 'Lead Admin & Owner',
     period: 'Sekarang',
     description: 'Bertanggung jawab atas moderasi konten dan manajemen komunitas online. Menciptakan lingkungan yang aman dan menghibur bagi anggota.',
-    icon: Users
+    order_index: 1
   },
   {
-    id: 3,
+    id: '3',
     title: 'PT Midi Utama Indonesia Tbk (Alfamidi)',
     role: 'Staff Operasional',
     period: '± 1 Tahun',
     description: 'Pengalaman profesional pertama dalam lingkungan ritel fast-paced. Mempelajari standar pelayanan pelanggan (SOP), manajemen inventaris, dan disiplin kerja korporat.',
-    icon: ShoppingBag
+    order_index: 2
   },
 ];
 
+interface ExperienceData {
+  id: string;
+  title: string;
+  role: string;
+  period: string;
+  description: string;
+  order_index: number;
+}
+
 const Experience: React.FC = () => {
+  const [experiences, setExperiences] = useState<ExperienceData[]>(defaultExperiences);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchExperiences = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('experiences')
+          .select('*')
+          .eq('is_active', true)
+          .order('order_index', { ascending: true });
+
+        if (error) throw error;
+        if (data && data.length > 0) {
+          setExperiences(data);
+        }
+      } catch (error) {
+        console.error('Error fetching experiences:', error);
+        // Keep default experiences on error
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchExperiences();
+  }, []);
+
+  if (loading) {
+    return (
+      <section id="experience" className="py-24 bg-white scroll-mt-20">
+        <div className="flex justify-center items-center py-12">
+          <Loader2 className="w-8 h-8 animate-spin text-primary" />
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section id="experience" className="py-24 bg-white scroll-mt-20">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
           <div className="text-center mb-16">
-             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Perjalanan Karir</h2>
-             <p className="text-slate-600">Jejak langkah dalam dunia profesional dan wirausaha</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Perjalanan Karir</h2>
+            <p className="text-slate-600">Jejak langkah dalam dunia profesional dan wirausaha</p>
           </div>
         </Reveal>
 
@@ -49,7 +96,7 @@ const Experience: React.FC = () => {
             {experiences.map((exp, idx) => (
               <Reveal key={exp.id} delay={idx * 0.1}>
                 <div className={`relative flex flex-col md:flex-row gap-8 ${idx % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
-                  
+
                   {/* Icon Marker */}
                   <div className="absolute left-8 -translate-x-1/2 md:left-1/2 w-8 h-8 rounded-full bg-white border-4 border-primary shadow-sm z-10 flex items-center justify-center"></div>
 

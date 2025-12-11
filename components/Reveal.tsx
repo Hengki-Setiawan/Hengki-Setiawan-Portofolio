@@ -1,50 +1,36 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { motion, useInView, useAnimation } from 'framer-motion';
 
 interface RevealProps {
   children: React.ReactNode;
-  width?: 'fit-content' | '100%';
+  width?: "fit-content" | "100%";
   delay?: number;
 }
 
-const Reveal: React.FC<RevealProps> = ({ children, width = '100%', delay = 0 }) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
+const Reveal: React.FC<RevealProps> = ({ children, width = "fit-content", delay = 0.25 }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+  const mainControls = useAnimation();
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect(); // Only trigger once
-        }
-      },
-      {
-        threshold: 0.1, // Trigger when 10% of the element is visible
-        rootMargin: '0px 0px -50px 0px', // Slightly offset triggering
-      }
-    );
-
-    if (ref.current) {
-      observer.observe(ref.current);
+    if (isInView) {
+      mainControls.start("visible");
     }
-
-    return () => {
-      if (ref.current) observer.unobserve(ref.current);
-    };
-  }, []);
+  }, [isInView, mainControls]);
 
   return (
-    <div
-      ref={ref}
-      style={{ 
-        width,
-        transitionDelay: `${delay}s` 
-      }}
-      className={`transition-all duration-1000 ease-out transform ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'
-      }`}
-    >
-      {children}
+    <div ref={ref} style={{ position: "relative", width, overflow: "hidden" }}>
+      <motion.div
+        variants={{
+          hidden: { opacity: 0, y: 75 },
+          visible: { opacity: 1, y: 0 },
+        }}
+        initial="hidden"
+        animate={mainControls}
+        transition={{ duration: 0.5, delay: delay }}
+      >
+        {children}
+      </motion.div>
     </div>
   );
 };
