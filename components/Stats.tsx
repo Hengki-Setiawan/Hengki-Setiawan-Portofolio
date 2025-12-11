@@ -146,7 +146,7 @@ const Stats: React.FC = () => {
   return (
     <section className="py-12 bg-white border-b border-slate-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Reveal>
+        <Reveal width="100%">
           {loading ? (
             <div className="flex justify-center py-8">
               <Loader2 className="w-8 h-8 animate-spin text-primary" />

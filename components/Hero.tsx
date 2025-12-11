@@ -26,6 +26,8 @@ interface HeroContent {
   badge_1_subtitle: string;
   badge_2_emoji: string;
   badge_2_text: string;
+  badge_3_emoji: string;
+  badge_3_text: string;
 }
 
 // Default content as fallback
@@ -50,7 +52,9 @@ const defaultContent: HeroContent = {
   badge_1_title: 'Mahasiswa',
   badge_1_subtitle: 'Bisnis Digital',
   badge_2_emoji: '👑',
-  badge_2_text: 'Owner Kaos Kami'
+  badge_2_text: 'Owner Kaos Kami',
+  badge_3_emoji: '🛡️',
+  badge_3_text: 'Admin Grup Kami'
 };
 
 const Hero: React.FC = () => {
@@ -116,13 +120,13 @@ const Hero: React.FC = () => {
 
           {/* Left Column: Text Content */}
           <div className="w-full md:w-1/2 text-center md:text-left order-2 md:order-1">
-            <Reveal>
+            <Reveal width="100%">
               <div className="inline-block px-4 py-1.5 rounded-full bg-surface border border-white/10 text-primary font-semibold text-sm mb-6 shadow-lg shadow-primary/10 backdrop-blur-sm">
                 {content.greeting}
               </div>
             </Reveal>
 
-            <Reveal delay={0.1}>
+            <Reveal delay={0.1} width="100%">
               <h2 className="text-4xl font-medium text-textMuted mb-2 font-display">
                 {content.hello_text}
               </h2>
@@ -132,7 +136,7 @@ const Hero: React.FC = () => {
               </h1>
             </Reveal>
 
-            <Reveal delay={0.2}>
+            <Reveal delay={0.2} width="100%">
               <div className="flex flex-wrap justify-center md:justify-start gap-2 md:gap-3 text-lg font-medium text-textMuted mb-6">
                 <span>{content.role_1}</span>
                 <span className="hidden md:inline text-primary">•</span>
@@ -144,13 +148,13 @@ const Hero: React.FC = () => {
               </div>
             </Reveal>
 
-            <Reveal delay={0.3}>
+            <Reveal delay={0.3} width="100%">
               <p className="text-lg text-slate-400 mb-8 leading-relaxed max-w-lg mx-auto md:mx-0">
                 {content.description}
               </p>
             </Reveal>
 
-            <Reveal delay={0.4}>
+            <Reveal delay={0.4} width="100%">
               <div className="flex flex-col sm:flex-row items-center gap-4 justify-center md:justify-start">
                 <Link
                   to="/contact"
@@ -169,7 +173,7 @@ const Hero: React.FC = () => {
               </div>
             </Reveal>
 
-            <Reveal delay={0.5}>
+            <Reveal delay={0.5} width="100%">
               <div className="mt-10 flex items-center gap-6 justify-center md:justify-start">
                 <a href={content.linkedin_url} target="_blank" rel="noreferrer" className="text-slate-400 hover:text-primary transition-colors hover:scale-110 transform duration-200">
                   <Linkedin size={24} />
@@ -185,43 +189,54 @@ const Hero: React.FC = () => {
           </div>
 
           {/* Right Column: Image */}
-          <div className="w-full md:w-1/2 flex justify-center md:justify-end relative order-1 md:order-2">
-            <Reveal delay={0.2}>
-              <div className="relative w-[280px] h-[350px] md:w-[400px] md:h-[500px]">
-                {/* Neon Circle Background */}
-                <div className="absolute top-10 -right-4 md:-right-10 w-full h-full bg-gradient-to-br from-primary/20 to-secondary/20 rounded-[3rem] rotate-6 z-0 blur-xl"></div>
-                <div className="absolute top-10 -right-4 md:-right-10 w-full h-full bg-surface border border-white/10 rounded-[3rem] rotate-6 z-0"></div>
+          <div className="w-full md:w-1/2 flex justify-center md:justify-center relative order-1 md:order-2">
+            <div className="relative">
+              <Reveal delay={0.2} width="100%">
+                <div className="relative w-[280px] h-[350px] md:w-[400px] md:h-[500px]">
+                  {/* Neon Circle Background */}
+                  <div className="absolute top-10 -right-4 md:-right-10 w-full h-full bg-gradient-to-br from-primary/20 to-secondary/20 rounded-[3rem] rotate-6 z-0 blur-xl"></div>
+                  <div className="absolute top-10 -right-4 md:-right-10 w-full h-full bg-surface border border-white/10 rounded-[3rem] rotate-6 z-0"></div>
 
-                {/* Image Container */}
-                <div className="absolute inset-0 bg-surface rounded-[3rem] overflow-hidden z-10 shadow-2xl border-[6px] border-surface/50 group">
-                  <img
-                    src={content.main_image}
-                    alt={`${content.name_first} ${content.name_last}`}
-                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-60"></div>
-                </div>
-
-                {/* Floating Badge 1 */}
-                <div className="absolute -bottom-6 -left-6 z-20 bg-surface/90 backdrop-blur-md p-4 rounded-2xl shadow-xl border border-white/10 flex items-center gap-3 animate-bounce" style={{ animationDuration: '3s' }}>
-                  <div className="bg-primary/20 p-2 rounded-full text-primary">
-                    <span className="text-xl">{content.badge_1_emoji}</span>
-                  </div>
-                  <div>
-                    <p className="text-xs text-slate-400 font-bold">{content.badge_1_title}</p>
-                    <p className="text-sm font-bold text-white">{content.badge_1_subtitle}</p>
+                  {/* Image Container with Frame */}
+                  <div className="absolute inset-0 bg-surface rounded-[3rem] overflow-hidden z-10 shadow-2xl border-[8px] border-white/10 group">
+                    <div className="absolute inset-0 border-[3px] border-white/20 rounded-[2.5rem] z-20 pointer-events-none"></div>
+                    <img
+                      src={content.main_image}
+                      alt={`${content.name_first} ${content.name_last}`}
+                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-60"></div>
                   </div>
                 </div>
+              </Reveal>
 
-                {/* Floating Badge 2 */}
-                <div className="absolute top-10 -left-10 z-20 bg-surface/90 backdrop-blur-md p-3 rounded-2xl shadow-lg border border-white/10 hidden md:flex items-center gap-2">
-                  <div className="bg-accent/20 p-1.5 rounded-full text-accent">
-                    <span className="text-lg">{content.badge_2_emoji}</span>
-                  </div>
-                  <p className="text-xs font-bold text-slate-200">{content.badge_2_text}</p>
+              {/* Floating Badge 1 */}
+              <div className="absolute -bottom-6 -left-6 z-30 bg-surface/90 backdrop-blur-md p-4 rounded-2xl shadow-xl border border-white/10 flex items-center gap-3 animate-bounce" style={{ animationDuration: '3s' }}>
+                <div className="bg-primary/20 p-2 rounded-full text-primary">
+                  <span className="text-xl">{content.badge_1_emoji}</span>
+                </div>
+                <div>
+                  <p className="text-xs text-slate-400 font-bold">{content.badge_1_title}</p>
+                  <p className="text-sm font-bold text-white">{content.badge_1_subtitle}</p>
                 </div>
               </div>
-            </Reveal>
+
+              {/* Floating Badge 2 */}
+              <div className="absolute top-10 -left-10 z-30 bg-surface/90 backdrop-blur-md p-3 rounded-2xl shadow-lg border border-white/10 hidden md:flex items-center gap-2">
+                <div className="bg-accent/20 p-1.5 rounded-full text-accent">
+                  <span className="text-lg">{content.badge_2_emoji}</span>
+                </div>
+                <p className="text-xs font-bold text-slate-200">{content.badge_2_text}</p>
+              </div>
+
+              {/* Floating Badge 3 */}
+              <div className="absolute top-20 -right-12 z-30 bg-surface/90 backdrop-blur-md p-3 rounded-2xl shadow-lg border border-white/10 hidden md:flex items-center gap-2 animate-pulse" style={{ animationDuration: '4s' }}>
+                <div className="bg-green-500/20 p-1.5 rounded-full text-green-500">
+                  <span className="text-lg">{content.badge_3_emoji}</span>
+                </div>
+                <p className="text-xs font-bold text-slate-200">{content.badge_3_text}</p>
+              </div>
+            </div>
           </div>
 
         </div>

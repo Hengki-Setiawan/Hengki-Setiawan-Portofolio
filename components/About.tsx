@@ -130,7 +130,7 @@ const About: React.FC = () => {
 
           {/* Left Column: Image Carousel */}
           <div className="order-2 md:order-1 relative">
-            <Reveal delay={0.2}>
+            <Reveal delay={0.2} width="100%">
               <div className="relative">
                 <div className="absolute top-4 left-4 w-full h-full border-2 border-primary/20 rounded-2xl z-0"></div>
 
@@ -172,7 +172,7 @@ const About: React.FC = () => {
 
           {/* Right Column: Content */}
           <div className="order-1 md:order-2">
-            <Reveal>
+            <Reveal width="100%">
               <h4 className="text-primary font-bold tracking-wide uppercase text-sm mb-2">{content.section_label}</h4>
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
                 {content.title_1} <span className="text-primary">{content.title_highlight}</span><br />
@@ -180,7 +180,7 @@ const About: React.FC = () => {
               </h2>
             </Reveal>
 
-            <Reveal delay={0.1}>
+            <Reveal delay={0.1} width="100%">
               <p className="text-slate-600 mb-6 leading-relaxed text-lg">
                 {content.description_1}
               </p>
@@ -190,7 +190,7 @@ const About: React.FC = () => {
             </Reveal>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <Reveal delay={0.2}>
+              <Reveal delay={0.2} width="100%">
                 <div className="flex gap-4">
                   <div className="flex-shrink-0 w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-primary">
                     <GraduationCap size={24} />
@@ -205,7 +205,7 @@ const About: React.FC = () => {
                 </div>
               </Reveal>
 
-              <Reveal delay={0.3}>
+              <Reveal delay={0.3} width="100%">
                 <div className="flex gap-4">
                   <div className="flex-shrink-0 w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center text-orange-600">
                     <Target size={24} />
@@ -217,7 +217,7 @@ const About: React.FC = () => {
                 </div>
               </Reveal>
 
-              <Reveal delay={0.4}>
+              <Reveal delay={0.4} width="100%">
                 <div className="flex gap-4">
                   <div className="flex-shrink-0 w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center text-green-600">
                     <Briefcase size={24} />
@@ -229,7 +229,7 @@ const About: React.FC = () => {
                 </div>
               </Reveal>
 
-              <Reveal delay={0.5}>
+              <Reveal delay={0.5} width="100%">
                 <div className="flex gap-4">
                   <div className="flex-shrink-0 w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center text-purple-600">
                     <MapPin size={24} />

@@ -42,7 +42,7 @@ const Testimonials: React.FC = () => {
   return (
     <section className="py-24 bg-slate-50 border-t border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Reveal>
+        <Reveal width="100%">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Apa Kata Mereka?</h2>
             <p className="text-slate-600">Kepercayaan adalah aset terbesar dalam bisnis digital.</p>
@@ -56,7 +56,7 @@ const Testimonials: React.FC = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map((item, idx) => (
-              <Reveal key={item.id} delay={idx * 0.1}>
+              <Reveal key={item.id} delay={idx * 0.1} width="100%">
                 <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 relative h-full flex flex-col">
                   <div className="absolute top-6 right-8 text-primary/10">
                     <Quote size={48} fill="currentColor" />

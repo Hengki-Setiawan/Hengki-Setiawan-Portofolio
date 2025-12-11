@@ -70,7 +70,7 @@ const FAQ: React.FC = () => {
   return (
     <section id="faq" className="py-24 bg-white scroll-mt-20">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Reveal>
+        <Reveal width="100%">
           <div className="text-center mb-12">
             <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-slate-100 text-slate-500 mb-4">
               <HelpCircle size={24} />
@@ -89,7 +89,7 @@ const FAQ: React.FC = () => {
         ) : (
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <Reveal key={faq.id} delay={index * 0.1}>
+              <Reveal key={faq.id} delay={index * 0.1} width="100%">
                 <div
                   className={`border rounded-xl transition-all duration-300 ${openIndex === index ? 'border-primary bg-blue-50/30' : 'border-slate-200 bg-white hover:border-primary/50'}`}
                 >

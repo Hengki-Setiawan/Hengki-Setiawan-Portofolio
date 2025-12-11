@@ -81,7 +81,7 @@ const Experience: React.FC = () => {
   return (
     <section id="experience" className="py-24 bg-white scroll-mt-20">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Reveal>
+        <Reveal width="100%">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Perjalanan Karir</h2>
             <p className="text-slate-600">Jejak langkah dalam dunia profesional dan wirausaha</p>
@@ -94,7 +94,7 @@ const Experience: React.FC = () => {
 
           <div className="space-y-12">
             {experiences.map((exp, idx) => (
-              <Reveal key={exp.id} delay={idx * 0.1}>
+              <Reveal key={exp.id} delay={idx * 0.1} width="100%">
                 <div className={`relative flex flex-col md:flex-row gap-8 ${idx % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
 
                   {/* Icon Marker */}

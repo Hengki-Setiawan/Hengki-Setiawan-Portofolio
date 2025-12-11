@@ -72,7 +72,7 @@ const Skills: React.FC = () => {
   return (
     <section id="skills" className="py-24 bg-slate-50 scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Reveal>
+        <Reveal width="100%">
           <div className="text-center mb-16 max-w-3xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Keahlian & Kompetensi</h2>
             <p className="text-slate-600 text-lg">
@@ -86,7 +86,7 @@ const Skills: React.FC = () => {
             const colors = getCategoryColor(skill.category);
 
             return (
-              <Reveal key={skill.id} delay={idx * 0.1}>
+              <Reveal key={skill.id} delay={idx * 0.1} width="100%">
                 <div className="h-full bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
                   <div className={`w-14 h-14 ${colors.bg} ${colors.text} rounded-xl flex items-center justify-center mb-6`}>
                     {getIcon(skill.icon_name)}

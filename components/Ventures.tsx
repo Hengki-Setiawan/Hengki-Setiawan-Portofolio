@@ -61,7 +61,7 @@ const Ventures: React.FC = () => {
   return (
     <section id="ventures" className="py-24 bg-slate-50 scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Reveal>
+        <Reveal width="100%">
           <div className="text-center mb-20">
             <span className="text-primary font-bold tracking-wider uppercase text-sm">Bisnis & Komunitas</span>
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mt-2 mb-4">Proyek Unggulan</h2>
@@ -77,7 +77,7 @@ const Ventures: React.FC = () => {
             const isEven = idx % 2 === 0;
 
             return (
-              <Reveal key={venture.id} delay={0.1}>
+              <Reveal key={venture.id} delay={0.1} width="100%">
                 <div className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-12 lg:gap-20`}>
 
                   {/* Image Section */}

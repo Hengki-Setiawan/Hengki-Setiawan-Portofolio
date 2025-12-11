@@ -47,7 +47,7 @@ const Contact: React.FC = () => {
   return (
     <section id="contact" className="py-24 bg-white scroll-mt-20">
       <div className="max-w-5xl mx-auto px-4">
-        <Reveal>
+        <Reveal width="100%">
           <div className="bg-primary rounded-3xl p-8 md:p-16 shadow-2xl overflow-hidden relative">
 
             {/* Decoration Circles */}

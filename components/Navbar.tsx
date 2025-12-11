@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Sun, Moon } from 'lucide-react';
-import { useTheme } from '../lib/ThemeContext';
+import { Menu, X } from 'lucide-react';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
-  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,15 +55,6 @@ const Navbar: React.FC = () => {
                     }`}></span>
                 </Link>
               ))}
-
-              <button
-                onClick={toggleTheme}
-                className="p-2 rounded-full text-slate-300 hover:text-white hover:bg-white/10 transition-colors"
-                aria-label="Toggle Theme"
-              >
-                {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-              </button>
-
               <Link
                 to="/contact"
                 className="bg-primary text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-primaryDark hover:shadow-lg hover:shadow-primary/30 transition-all transform hover:-translate-y-0.5"
@@ -75,14 +64,7 @@ const Navbar: React.FC = () => {
             </div>
           </div>
 
-          <div className="-mr-2 flex md:hidden items-center gap-2">
-            <button
-              onClick={toggleTheme}
-              className="p-2 rounded-full text-slate-300 hover:text-white hover:bg-white/10 transition-colors"
-              aria-label="Toggle Theme"
-            >
-              {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-            </button>
+          <div className="-mr-2 flex md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="inline-flex items-center justify-center p-2 rounded-md text-slate-300 hover:text-white hover:bg-white/10 focus:outline-none"

@@ -103,7 +103,7 @@ const MediaShowcase: React.FC = () => {
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[200px]" />
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <Reveal>
+                <Reveal width="100%">
                     <div className="text-center mb-12">
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/20 text-accent text-sm font-medium mb-4">
                             <Film className="w-4 h-4" />
@@ -118,7 +118,7 @@ const MediaShowcase: React.FC = () => {
                     </div>
                 </Reveal>
 
-                <Reveal>
+                <Reveal width="100%">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {mediaItems.map((item) => {
                             const gradientColor = platformColors[item.platform] || platformColors.default;

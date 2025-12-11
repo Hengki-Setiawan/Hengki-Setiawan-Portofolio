@@ -79,62 +79,58 @@ const HomePage = () => (
   </>
 );
 
-import { ThemeProvider } from './lib/ThemeContext';
-
 const App: React.FC = () => {
   return (
     <HelmetProvider>
-      <ThemeProvider>
-        <AuthProvider>
-          <ToastProvider>
-            <BrowserRouter>
-              <Routes>
-                {/* Public Pages */}
-                <Route path="/" element={<HomePage />} />
-                <Route path="/services" element={<ServicesPage />} />
-                <Route path="/experience" element={<ExperiencePage />} />
-                <Route path="/websites" element={<WebsitesPage />} />
-                <Route path="/contact" element={<ContactPage />} />
-                <Route path="/cv" element={<CVPage />} />
-                <Route path="/projects/:id" element={<ProjectDetailPage />} />
-                {/* Admin Routes */}
-                <Route path="/admin/login" element={<AdminLogin />} />
-                <Route
-                  path="/admin/*"
-                  element={
-                    <ProtectedRoute>
-                      <AdminLayout />
-                    </ProtectedRoute>
-                  }
-                >
-                  <Route index element={<AdminDashboard />} />
-                  <Route path="profile" element={<AdminProfile />} />
-                  <Route path="hero" element={<AdminHero />} />
-                  <Route path="about" element={<AdminAbout />} />
-                  <Route path="stats" element={<AdminStats />} />
-                  <Route path="services" element={<AdminServices />} />
-                  <Route path="faq" element={<AdminFAQ />} />
-                  <Route path="experience" element={<AdminExperience />} />
-                  <Route path="projects" element={<AdminProjects />} />
-                  <Route path="testimonials" element={<AdminTestimonials />} />
-                  <Route path="messages" element={<AdminMessages />} />
-                  <Route path="subscribers" element={<AdminSubscribers />} />
-                  <Route path="achievements" element={<AdminAchievements />} />
-                  <Route path="media" element={<AdminMediaShowcase />} />
-                  <Route path="websites" element={<AdminWebsites />} />
-                  <Route path="skills" element={<AdminSkills />} />
-                  <Route path="cv" element={<AdminCV />} />
-                </Route>
+      <AuthProvider>
+        <ToastProvider>
+          <BrowserRouter>
+            <Routes>
+              {/* Public Pages */}
+              <Route path="/" element={<HomePage />} />
+              <Route path="/services" element={<ServicesPage />} />
+              <Route path="/experience" element={<ExperiencePage />} />
+              <Route path="/websites" element={<WebsitesPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/cv" element={<CVPage />} />
+              <Route path="/projects/:id" element={<ProjectDetailPage />} />
+              {/* Admin Routes */}
+              <Route path="/admin/login" element={<AdminLogin />} />
+              <Route
+                path="/admin/*"
+                element={
+                  <ProtectedRoute>
+                    <AdminLayout />
+                  </ProtectedRoute>
+                }
+              >
+                <Route index element={<AdminDashboard />} />
+                <Route path="profile" element={<AdminProfile />} />
+                <Route path="hero" element={<AdminHero />} />
+                <Route path="about" element={<AdminAbout />} />
+                <Route path="stats" element={<AdminStats />} />
+                <Route path="services" element={<AdminServices />} />
+                <Route path="faq" element={<AdminFAQ />} />
+                <Route path="experience" element={<AdminExperience />} />
+                <Route path="projects" element={<AdminProjects />} />
+                <Route path="testimonials" element={<AdminTestimonials />} />
+                <Route path="messages" element={<AdminMessages />} />
+                <Route path="subscribers" element={<AdminSubscribers />} />
+                <Route path="achievements" element={<AdminAchievements />} />
+                <Route path="media" element={<AdminMediaShowcase />} />
+                <Route path="websites" element={<AdminWebsites />} />
+                <Route path="skills" element={<AdminSkills />} />
+                <Route path="cv" element={<AdminCV />} />
+              </Route>
 
-                {/* 404 */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-              <N8nChatWidget />
-              <ParticlesBackground />
-            </BrowserRouter>
-          </ToastProvider>
-        </AuthProvider>
-      </ThemeProvider>
+              {/* 404 */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+            <N8nChatWidget />
+            <ParticlesBackground />
+          </BrowserRouter>
+        </ToastProvider>
+      </AuthProvider>
     </HelmetProvider>
   );
 };

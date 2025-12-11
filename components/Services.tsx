@@ -81,7 +81,7 @@ const Services: React.FC = () => {
   return (
     <section id="services" className="py-24 bg-white scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Reveal>
+        <Reveal width="100%">
           <div className="text-center mb-16">
             <span className="text-primary font-bold tracking-wider uppercase text-sm">Apa yang saya tawarkan?</span>
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mt-2 mb-4">Layanan Profesional</h2>
@@ -102,7 +102,7 @@ const Services: React.FC = () => {
               const IconComponent = iconMap[service.icon] || Monitor;
 
               return (
-                <Reveal key={service.id} delay={idx * 0.1}>
+                <Reveal key={service.id} delay={idx * 0.1} width="100%">
                   <div className={`h-full p-8 rounded-2xl bg-white border ${scheme.border} shadow-sm hover:shadow-xl transition-all duration-300 group hover:-translate-y-1`}>
                     <div className={`w-14 h-14 ${scheme.bg} ${scheme.color} rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
                       <IconComponent size={28} />

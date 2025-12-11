@@ -140,7 +140,7 @@ const Achievements: React.FC = () => {
             <div className="absolute bottom-0 left-0 w-96 h-96 bg-secondary/5 rounded-full blur-[150px]" />
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <Reveal>
+                <Reveal width="100%">
                     <div className="text-center mb-12">
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-4">
                             <Trophy className="w-4 h-4" />
@@ -155,7 +155,7 @@ const Achievements: React.FC = () => {
                     </div>
                 </Reveal>
 
-                <Reveal>
+                <Reveal width="100%">
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
                         {achievements.map((achievement, index) => {
                             const gradientColor = platformColors[achievement.platform] || platformColors.default;

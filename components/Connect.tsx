@@ -127,7 +127,7 @@ const Connect: React.FC = () => {
             <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-100 rounded-full blur-3xl opacity-30 translate-x-1/2 translate-y-1/2"></div>
 
             <div className="max-w-7xl mx-auto px-4 relative z-10">
-                <Reveal>
+                <Reveal width="100%">
                     <div className="text-center mb-16">
                         <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-6">
                             Connect & <span className="text-primary">Collaborate</span>
@@ -142,7 +142,7 @@ const Connect: React.FC = () => {
 
                     {/* Column 1: Official Store */}
                     <div className="space-y-8">
-                        <Reveal delay={0.1}>
+                        <Reveal delay={0.1} width="100%">
                             <div className="flex items-center gap-3 mb-6">
                                 <ShoppingBag className="w-6 h-6 text-primary" />
                                 <h3 className="text-xl font-bold text-slate-800">Official Store</h3>
@@ -154,7 +154,7 @@ const Connect: React.FC = () => {
                         </Reveal>
 
                         {/* Shopee Card */}
-                        <Reveal delay={0.2}>
+                        <Reveal delay={0.2} width="100%">
                             <a
                                 href="https://shopee.co.id/kaos_kami"
                                 target="_blank"
@@ -200,7 +200,7 @@ const Connect: React.FC = () => {
                         </Reveal>
 
                         {/* Tokopedia Card */}
-                        <Reveal delay={0.3}>
+                        <Reveal delay={0.3} width="100%">
                             <a
                                 href="https://www.tokopedia.com/kaos-kami"
                                 target="_blank"
@@ -245,7 +245,7 @@ const Connect: React.FC = () => {
 
                     {/* Column 2: Communities */}
                     <div className="space-y-6">
-                        <Reveal delay={0.2}>
+                        <Reveal delay={0.2} width="100%">
                             <div className="flex items-center gap-3 mb-6">
                                 <Users className="w-6 h-6 text-primary" />
                                 <h3 className="text-xl font-bold text-slate-800">Community</h3>
@@ -257,7 +257,7 @@ const Connect: React.FC = () => {
                         </Reveal>
 
                         {/* Depresi Group */}
-                        <Reveal delay={0.3}>
+                        <Reveal delay={0.3} width="100%">
                             <a
                                 href="https://www.facebook.com/groups/1066750060883536"
                                 target="_blank"
@@ -294,7 +294,7 @@ const Connect: React.FC = () => {
                         </Reveal>
 
                         {/* Bahagia Group */}
-                        <Reveal delay={0.4}>
+                        <Reveal delay={0.4} width="100%">
                             <a
                                 href="https://www.facebook.com/groups/610974693984891"
                                 target="_blank"
@@ -328,7 +328,7 @@ const Connect: React.FC = () => {
                         </Reveal>
 
                         {/* Skizo Group */}
-                        <Reveal delay={0.5}>
+                        <Reveal delay={0.5} width="100%">
                             <a
                                 href="https://www.facebook.com/groups/3307589206129666"
                                 target="_blank"
@@ -363,7 +363,7 @@ const Connect: React.FC = () => {
                         </Reveal>
 
                         {/* Total Stats Summary */}
-                        <Reveal delay={0.6}>
+                        <Reveal delay={0.6} width="100%">
                             <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 rounded-xl p-5 text-white shadow-xl">
                                 <div className="text-center">
                                     <div className="text-3xl font-bold mb-1">
@@ -378,7 +378,7 @@ const Connect: React.FC = () => {
 
                     {/* Column 3: Socials & Contact */}
                     <div className="space-y-8">
-                        <Reveal delay={0.3}>
+                        <Reveal delay={0.3} width="100%">
                             <div className="flex items-center gap-3 mb-6">
                                 <Globe className="w-6 h-6 text-primary" />
                                 <h3 className="text-xl font-bold text-slate-800">Social & Contact</h3>
@@ -387,7 +387,7 @@ const Connect: React.FC = () => {
 
                         <div className="grid grid-cols-2 gap-4">
                             {/* Instagram */}
-                            <Reveal delay={0.4}>
+                            <Reveal delay={0.4} width="100%">
                                 <a href="https://www.instagram.com/hengkimiau?igsh=MW9ycDR2NW1ueXZ0eg==" target="_blank" rel="noreferrer" className="bg-white p-4 rounded-xl shadow-md hover:shadow-lg transition-all hover:-translate-y-1 flex flex-col items-center text-center group relative overflow-hidden">
                                     <div className="w-10 h-10 bg-pink-100 text-pink-600 rounded-full flex items-center justify-center mb-3 group-hover:bg-pink-600 group-hover:text-white transition-colors z-10">
                                         <Instagram className="w-5 h-5" />
@@ -402,7 +402,7 @@ const Connect: React.FC = () => {
                             </Reveal>
 
                             {/* TikTok */}
-                            <Reveal delay={0.5}>
+                            <Reveal delay={0.5} width="100%">
                                 <a href="https://www.tiktok.com/@hengki.skizo?_r=1&_t=ZS-925xeJRk7dd" target="_blank" rel="noreferrer" className="bg-white p-4 rounded-xl shadow-md hover:shadow-lg transition-all hover:-translate-y-1 flex flex-col items-center text-center group relative overflow-hidden">
                                     <div className="w-10 h-10 bg-slate-100 text-slate-900 rounded-full flex items-center justify-center mb-3 group-hover:bg-slate-900 group-hover:text-white transition-colors z-10">
                                         <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" /></svg>
@@ -414,7 +414,7 @@ const Connect: React.FC = () => {
                             </Reveal>
 
                             {/* LinkedIn */}
-                            <Reveal delay={0.6}>
+                            <Reveal delay={0.6} width="100%">
                                 <a href="https://www.linkedin.com/in/hengki-setiawan-8064a6353" target="_blank" rel="noreferrer" className="bg-white p-4 rounded-xl shadow-md hover:shadow-lg transition-all hover:-translate-y-1 flex flex-col items-center text-center group">
                                     <div className="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mb-3 group-hover:bg-blue-600 group-hover:text-white transition-colors">
                                         <Linkedin className="w-5 h-5" />
@@ -425,7 +425,7 @@ const Connect: React.FC = () => {
                             </Reveal>
 
                             {/* GitHub */}
-                            <Reveal delay={0.7}>
+                            <Reveal delay={0.7} width="100%">
                                 <a href="https://github.com/Hengki-Setiawan" target="_blank" rel="noreferrer" className="bg-white p-4 rounded-xl shadow-md hover:shadow-lg transition-all hover:-translate-y-1 flex flex-col items-center text-center group">
                                     <div className="w-10 h-10 bg-slate-100 text-slate-800 rounded-full flex items-center justify-center mb-3 group-hover:bg-slate-800 group-hover:text-white transition-colors">
                                         <Github className="w-5 h-5" />
@@ -437,7 +437,7 @@ const Connect: React.FC = () => {
                         </div>
 
                         {/* Direct Contact List */}
-                        <Reveal delay={0.8}>
+                        <Reveal delay={0.8} width="100%">
                             <div className="bg-white rounded-2xl p-6 shadow-lg mt-6">
                                 <h4 className="font-bold text-slate-800 mb-4 flex items-center gap-2">
                                     <MessageCircle className="w-4 h-4 text-primary" />

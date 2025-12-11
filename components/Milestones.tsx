@@ -72,7 +72,7 @@ const Milestones: React.FC = () => {
             <div className="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
             <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-                <Reveal>
+                <Reveal width="100%">
                     <div className="text-center mb-12">
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/10 border border-secondary/20 text-secondary text-sm font-medium mb-4">
                             <Calendar className="w-4 h-4" />
@@ -95,7 +95,7 @@ const Milestones: React.FC = () => {
                             const isEven = index % 2 === 0;
 
                             return (
-                                <Reveal key={milestone.id}>
+                                <Reveal key={milestone.id} width="100%">
                                     <div className={`relative flex items-center md:justify-center ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'} mb-8 md:mb-0`}>
                                         {/* Content */}
                                         <div className={`w-full md:w-5/12 ${isEven ? 'md:pr-16 md:text-right' : 'md:pl-16 md:text-left'} pl-8 md:pl-0`}>
