@@ -1,0 +1,113 @@
+{
+    "nav": {
+        "home": "Tentang",
+        "portfolio": "Portofolio",
+        "experience": "Perjalanan",
+        "websites": "Web Saya",
+        "blog": "Blog",
+        "guestbook": "Buku Tamu",
+        "contact": "Hubungi Saya"
+    },
+    "hero": {
+        "greeting": "Halo, saya",
+        "role": "Web Developer & Digital Creator",
+        "description": "Membangun pengalaman digital yang menarik dan fungsional. Fokus pada performa, desain, dan interaksi pengguna.",
+        "cta_primary": "Lihat Portofolio",
+        "cta_secondary": "Hubungi Saya",
+        "badge_student": "Mahasiswa",
+        "badge_business": "Bisnis Digital"
+    },
+    "about": {
+        "section_label": "Tentang Saya",
+        "title_1": "Lebih dari sekadar",
+        "title_highlight": "Mahasiswa.",
+        "title_2": "Seorang Praktisi Digital.",
+        "description_1": "Halo! Saya Hengki Setiawan. Saya percaya bahwa era digital membutuhkan generalis yang spesifik.",
+        "description_2": "Sebagai mahasiswa Bisnis Digital di Universitas Negeri Makassar, saya tidak hanya belajar teori. Saya mempraktikkannya dengan membangun brand clothing sendiri, mengelola komunitas online yang aktif, dan mengembangkan skill teknis dalam pengembangan web & otomasi.",
+        "education": "Pendidikan",
+        "education_desc": "Mahasiswa Bisnis Digital (UNM)",
+        "education_subdesc": "Alumni SMK 4 Makassar",
+        "focus": "Fokus Utama",
+        "focus_desc": "Business Development & Tech",
+        "experience": "Pengalaman",
+        "experience_desc": "Owner, Admin & Ex-Retail",
+        "location": "Domisili",
+        "location_desc": "Makassar, Indonesia"
+    },
+    "stats": {
+        "community": "Anggota Komunitas",
+        "community_desc": "Aktif & Solid",
+        "products": "Produk Terjual",
+        "products_desc": "Kaos & Merch",
+        "reach": "Jangkauan Konten",
+        "reach_desc": "Views per Bulan",
+        "years": "Pengalaman",
+        "years_desc": "Tahun Berkarya"
+    },
+    "skills": {
+        "title": "Keahlian & Kompetensi",
+        "description": "Kombinasi unik antara pemahaman bisnis, kreativitas konten, dan kemampuan teknis."
+    },
+    "services": {
+        "section_label": "Apa yang saya tawarkan?",
+        "title": "Layanan Profesional",
+        "description": "Solusi digital yang menggabungkan teknis coding dan strategi bisnis untuk membantu pertumbuhan proyek Anda.",
+        "cta": "Konsultasi Sekarang"
+    },
+    "faq": {
+        "title": "Pertanyaan Umum",
+        "description": "Beberapa hal yang sering ditanyakan oleh klien dan rekan kerja."
+    },
+    "experience_section": {
+        "title": "Perjalanan Karir",
+        "description": "Jejak langkah dalam dunia profesional dan wirausaha"
+    },
+    "guestbook": {
+        "title": "Buku",
+        "title_highlight": "Tamu",
+        "description": "Tinggalkan pesan, saran, atau sekadar menyapa!",
+        "write_message": "Tulis Pesan",
+        "name": "Nama",
+        "message": "Pesan",
+        "send": "Kirim Pesan",
+        "no_messages": "Belum ada pesan. Jadilah yang pertama!"
+    },
+    "connect": {
+        "title": "Connect &",
+        "title_highlight": "Collaborate",
+        "description": "Bergabung dengan komunitas kami yang terus berkembang. Data di bawah ini diupdate secara",
+        "live": "LIVE",
+        "official_store": "Official Store",
+        "total_sold": "Total Terjual",
+        "store_rating": "Rating Toko",
+        "people_viewing": "orang melihat",
+        "total_chat": "Total Chat",
+        "response_rate": "Response Rate",
+        "facebook_groups": "Grup Facebook",
+        "total_members": "Total Anggota",
+        "combined": "gabungan",
+        "members": "Anggota",
+        "social_media": "Media Sosial",
+        "followers": "Pengikut",
+        "connections": "Koneksi",
+        "repositories": "Repositori",
+        "direct_contact": "Kontak Langsung",
+        "ready_to_connect": "Siap terhubung?",
+        "email_me": "Pilih platform di atas atau kirim email langsung untuk diskusi lebih lanjut tentang kolaborasi.",
+        "send_email": "Kirim Email"
+    },
+    "footer": {
+        "tagline": "Pengusaha Digital & Developer",
+        "newsletter": "Dapatkan update terbaru tentang project & artikel saya.",
+        "subscribe_success": "Terima kasih telah berlangganan!",
+        "subscribe_error": "Gagal berlangganan. Silakan coba lagi.",
+        "made_with": "Dibuat dengan",
+        "in_makassar": "di Makassar."
+    },
+    "common": {
+        "loading": "Memuat...",
+        "error": "Terjadi kesalahan",
+        "read_more": "Baca Selengkapnya",
+        "back": "Kembali"
+    }
+}

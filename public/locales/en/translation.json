@@ -1,0 +1,113 @@
+{
+    "nav": {
+        "home": "About",
+        "portfolio": "Portfolio",
+        "experience": "Journey",
+        "websites": "My Websites",
+        "blog": "Blog",
+        "guestbook": "Guestbook",
+        "contact": "Contact Me"
+    },
+    "hero": {
+        "greeting": "Hello, I am",
+        "role": "Web Developer & Digital Creator",
+        "description": "Building engaging and functional digital experiences. Focused on performance, design, and user interaction.",
+        "cta_primary": "View Portfolio",
+        "cta_secondary": "Contact Me",
+        "badge_student": "Student",
+        "badge_business": "Digital Business"
+    },
+    "about": {
+        "section_label": "About Me",
+        "title_1": "More than just a",
+        "title_highlight": "Student.",
+        "title_2": "A Digital Practitioner.",
+        "description_1": "Hello! I'm Hengki Setiawan. I believe the digital era needs specialists who are also generalists.",
+        "description_2": "As a Digital Business student at Makassar State University, I don't just learn theory. I practice it by building my own clothing brand, managing active online communities, and developing technical skills in web development & automation.",
+        "education": "Education",
+        "education_desc": "Digital Business Student (UNM)",
+        "education_subdesc": "SMK 4 Makassar Alumni",
+        "focus": "Main Focus",
+        "focus_desc": "Business Development & Tech",
+        "experience": "Experience",
+        "experience_desc": "Owner, Admin & Ex-Retail",
+        "location": "Location",
+        "location_desc": "Makassar, Indonesia"
+    },
+    "stats": {
+        "community": "Community Members",
+        "community_desc": "Active & Solid",
+        "products": "Products Sold",
+        "products_desc": "T-shirts & Merch",
+        "reach": "Content Reach",
+        "reach_desc": "Views per Month",
+        "years": "Experience",
+        "years_desc": "Years of Work"
+    },
+    "skills": {
+        "title": "Skills & Competencies",
+        "description": "A unique combination of business understanding, content creativity, and technical ability."
+    },
+    "services": {
+        "section_label": "What do I offer?",
+        "title": "Professional Services",
+        "description": "Digital solutions combining technical coding and business strategy to help your project grow.",
+        "cta": "Consult Now"
+    },
+    "faq": {
+        "title": "Frequently Asked Questions",
+        "description": "Some things often asked by clients and colleagues."
+    },
+    "experience_section": {
+        "title": "Career Journey",
+        "description": "Footsteps in the professional and entrepreneurial world"
+    },
+    "guestbook": {
+        "title": "Guest",
+        "title_highlight": "Book",
+        "description": "Leave a message, suggestion, or just say hello!",
+        "write_message": "Write Message",
+        "name": "Name",
+        "message": "Message",
+        "send": "Send Message",
+        "no_messages": "No messages yet. Be the first!"
+    },
+    "connect": {
+        "title": "Connect &",
+        "title_highlight": "Collaborate",
+        "description": "Join our ever-growing community. Data below is updated",
+        "live": "LIVE",
+        "official_store": "Official Store",
+        "total_sold": "Total Sold",
+        "store_rating": "Store Rating",
+        "people_viewing": "people viewing",
+        "total_chat": "Total Chat",
+        "response_rate": "Response Rate",
+        "facebook_groups": "Facebook Groups",
+        "total_members": "Total Members",
+        "combined": "combined",
+        "members": "Members",
+        "social_media": "Social Media",
+        "followers": "Followers",
+        "connections": "Connections",
+        "repositories": "Repositories",
+        "direct_contact": "Direct Contact",
+        "ready_to_connect": "Ready to connect?",
+        "email_me": "Choose a platform above or send an email directly to discuss further about collaboration.",
+        "send_email": "Send Email"
+    },
+    "footer": {
+        "tagline": "Digital Entrepreneur & Developer",
+        "newsletter": "Get the latest updates about my projects & articles.",
+        "subscribe_success": "Thank you for subscribing!",
+        "subscribe_error": "Failed to subscribe. Please try again.",
+        "made_with": "Made with",
+        "in_makassar": "in Makassar."
+    },
+    "common": {
+        "loading": "Loading...",
+        "error": "An error occurred",
+        "read_more": "Read More",
+        "back": "Back"
+    }
+}

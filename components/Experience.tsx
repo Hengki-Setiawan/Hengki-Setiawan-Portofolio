@@ -2,33 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Briefcase, ShoppingBag, Users, Loader2 } from 'lucide-react';
 import Reveal from './Reveal';
 import { supabase } from '../lib/supabase';
+import { useTranslation } from 'react-i18next';
+import TranslatedText from './TranslatedText';
 
-// Default experiences as fallback
 const defaultExperiences = [
-  {
-    id: '1',
-    title: 'Kaos Kami',
-    role: 'Owner & Founder',
-    period: 'Sekarang',
-    description: 'Membangun brand clothing dari nol. Mengelola seluruh aspek bisnis mulai dari desain produk, manajemen produksi, hingga strategi pemasaran digital.',
-    order_index: 0
-  },
-  {
-    id: '2',
-    title: 'Komunitas "Kami Depresi dan Bahagia"',
-    role: 'Lead Admin & Owner',
-    period: 'Sekarang',
-    description: 'Bertanggung jawab atas moderasi konten dan manajemen komunitas online. Menciptakan lingkungan yang aman dan menghibur bagi anggota.',
-    order_index: 1
-  },
-  {
-    id: '3',
-    title: 'PT Midi Utama Indonesia Tbk (Alfamidi)',
-    role: 'Staff Operasional',
-    period: '± 1 Tahun',
-    description: 'Pengalaman profesional pertama dalam lingkungan ritel fast-paced. Mempelajari standar pelayanan pelanggan (SOP), manajemen inventaris, dan disiplin kerja korporat.',
-    order_index: 2
-  },
+  { id: '1', title: 'Kaos Kami', role: 'Owner & Founder', period: 'Sekarang', description: 'Membangun brand clothing dari nol.', order_index: 0 },
+  { id: '2', title: 'Komunitas "Kami Depresi dan Bahagia"', role: 'Lead Admin & Owner', period: 'Sekarang', description: 'Moderasi konten dan manajemen komunitas online.', order_index: 1 },
+  { id: '3', title: 'PT Midi Utama Indonesia Tbk (Alfamidi)', role: 'Staff Operasional', period: '± 1 Tahun', description: 'Pengalaman profesional pertama dalam lingkungan ritel.', order_index: 2 },
 ];
 
 interface ExperienceData {
@@ -41,6 +21,7 @@ interface ExperienceData {
 }
 
 const Experience: React.FC = () => {
+  const { t } = useTranslation();
   const [experiences, setExperiences] = useState<ExperienceData[]>(defaultExperiences);
   const [loading, setLoading] = useState(true);
 
@@ -59,7 +40,6 @@ const Experience: React.FC = () => {
         }
       } catch (error) {
         console.error('Error fetching experiences:', error);
-        // Keep default experiences on error
       } finally {
         setLoading(false);
       }
@@ -83,13 +63,12 @@ const Experience: React.FC = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal width="100%">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Perjalanan Karir</h2>
-            <p className="text-slate-600">Jejak langkah dalam dunia profesional dan wirausaha</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">{t('experience_section.title')}</h2>
+            <p className="text-slate-600">{t('experience_section.description')}</p>
           </div>
         </Reveal>
 
         <div className="relative">
-          {/* Vertical Line */}
           <div className="absolute left-8 top-0 bottom-0 w-px bg-slate-200 md:left-1/2 md:-ml-px"></div>
 
           <div className="space-y-12">
@@ -97,19 +76,17 @@ const Experience: React.FC = () => {
               <Reveal key={exp.id} delay={idx * 0.1} width="100%">
                 <div className={`relative flex flex-col md:flex-row gap-8 ${idx % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
 
-                  {/* Icon Marker */}
                   <div className="absolute left-8 -translate-x-1/2 md:left-1/2 w-8 h-8 rounded-full bg-white border-4 border-primary shadow-sm z-10 flex items-center justify-center"></div>
 
-                  {/* Content */}
                   <div className={`ml-16 md:ml-0 md:w-1/2 ${idx % 2 === 0 ? 'md:pl-12' : 'md:pr-12 md:text-right'}`}>
                     <div className="bg-slate-50 p-6 rounded-xl border border-slate-100 hover:border-primary/30 hover:shadow-md transition-all duration-300">
-                      <span className="inline-block px-3 py-1 rounded-full bg-blue-100 text-primary text-xs font-bold mb-3">
+                      <TranslatedText as="span" className="inline-block px-3 py-1 rounded-full bg-blue-100 text-primary text-xs font-bold mb-3">
                         {exp.period}
-                      </span>
-                      <h3 className="text-lg font-bold text-slate-900 mb-1">{exp.title}</h3>
-                      <p className="text-md font-medium text-slate-700 mb-3">{exp.role}</p>
+                      </TranslatedText>
+                      <TranslatedText as="h3" className="text-lg font-bold text-slate-900 mb-1">{exp.title}</TranslatedText>
+                      <TranslatedText as="p" className="text-md font-medium text-slate-700 mb-3">{exp.role}</TranslatedText>
                       <p className="text-slate-600 text-sm leading-relaxed">
-                        {exp.description}
+                        <TranslatedText>{exp.description}</TranslatedText>
                       </p>
                     </div>
                   </div>

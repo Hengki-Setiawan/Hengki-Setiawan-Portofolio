@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Heart, Instagram, Linkedin, Github, Globe, Mail, Loader2 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import { useTranslation } from 'react-i18next';
 
 const Footer: React.FC = () => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
@@ -14,7 +16,6 @@ const Footer: React.FC = () => {
     const now = Date.now();
     const timeDiff = now - lastClickTime.current;
 
-    // Reset if more than 3 seconds between clicks
     if (timeDiff > 3000) {
       setClickCount(1);
     } else {
@@ -23,10 +24,9 @@ const Footer: React.FC = () => {
 
     lastClickTime.current = now;
 
-    // Show admin button after 5 clicks
     if (clickCount + 1 >= 5) {
       setShowAdmin(true);
-      setTimeout(() => setShowAdmin(false), 10000); // Hide after 10 seconds
+      setTimeout(() => setShowAdmin(false), 10000);
       setClickCount(0);
     }
   };
@@ -42,7 +42,7 @@ const Footer: React.FC = () => {
         .insert([{ email }]);
 
       if (error) {
-        if (error.code === '23505') { // Unique violation
+        if (error.code === '23505') {
           alert('Email ini sudah terdaftar!');
         } else {
           throw error;
@@ -70,17 +70,15 @@ const Footer: React.FC = () => {
           >
             <img src="/images/logo-neco.png" alt="Logo" className="w-16 h-16 object-contain group-hover:rotate-12 transition-transform duration-300" />
           </div>
-          <h3
-            className="text-2xl font-bold text-slate-900 cursor-pointer select-none"
-          >
+          <h3 className="text-2xl font-bold text-slate-900 cursor-pointer select-none">
             Hengki<span className="text-primary">.Setiawan</span>
           </h3>
-          <p className="text-slate-500 text-sm mt-2">Digital Entrepreneur & Developer</p>
+          <p className="text-slate-500 text-sm mt-2">{t('footer.tagline')}</p>
         </div>
 
         {/* Newsletter Form */}
         <div className="w-full max-w-md mb-10">
-          <p className="text-slate-600 mb-4 text-sm">Dapatkan update terbaru tentang project & artikel saya.</p>
+          <p className="text-slate-600 mb-4 text-sm">{t('footer.newsletter')}</p>
           <form onSubmit={handleSubscribe} className="flex gap-2">
             <div className="relative flex-grow">
               <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
@@ -101,8 +99,8 @@ const Footer: React.FC = () => {
               {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Subscribe'}
             </button>
           </form>
-          {status === 'success' && <p className="text-green-600 text-xs mt-2">Terima kasih telah berlangganan!</p>}
-          {status === 'error' && <p className="text-red-600 text-xs mt-2">Gagal berlangganan. Silakan coba lagi.</p>}
+          {status === 'success' && <p className="text-green-600 text-xs mt-2">{t('footer.subscribe_success')}</p>}
+          {status === 'error' && <p className="text-red-600 text-xs mt-2">{t('footer.subscribe_error')}</p>}
         </div>
 
         <div className="flex space-x-6 mb-8">
@@ -122,7 +120,6 @@ const Footer: React.FC = () => {
 
         <div className="w-12 h-1 bg-primary mx-auto rounded-full mb-6 opacity-50"></div>
 
-        {/* Hidden Admin Button - Easter Egg */}
         {showAdmin && (
           <div className="mb-6 animate-bounce">
             <a
@@ -135,7 +132,7 @@ const Footer: React.FC = () => {
         )}
 
         <p className="text-slate-400 text-sm flex items-center justify-center gap-1">
-          Dibuat dengan <Heart className="w-3 h-3 text-red-500 fill-current animate-pulse" /> di Makassar.
+          {t('footer.made_with')} <Heart className="w-3 h-3 text-red-500 fill-current animate-pulse" /> {t('footer.in_makassar')}
         </p>
         <p className="text-slate-400 text-xs mt-2">© {new Date().getFullYear()} All Rights Reserved.</p>
       </div>

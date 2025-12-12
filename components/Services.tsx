@@ -1,39 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Monitor, Users, PenTool, ArrowRight, CheckCircle2, Code, ShoppingBag, TrendingUp, Briefcase, Globe, Palette, MessageCircle, Loader2 } from 'lucide-react';
+import { Monitor, Users, PenTool, ArrowRight, Code, ShoppingBag, TrendingUp, Briefcase, Globe, Palette, MessageCircle, Loader2 } from 'lucide-react';
 import Reveal from './Reveal';
 import { supabase } from '../lib/supabase';
+import { useTranslation } from 'react-i18next';
+import TranslatedText from './TranslatedText';
 
-// Icon mapping for dynamic icons from database
 const iconMap: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
   Monitor, Users, PenTool, Code, ShoppingBag, TrendingUp, Briefcase, Globe, Palette, MessageCircle
 };
 
-// Default services as fallback
 const defaultServices = [
-  {
-    id: '1',
-    title: 'Web Development',
-    description: 'Pembuatan website modern (Landing Page, Portfolio, UMKM) yang cepat, responsif, dan SEO-friendly menggunakan teknologi terbaru.',
-    icon: 'Monitor',
-    order_index: 0
-  },
-  {
-    id: '2',
-    title: 'Community Management',
-    description: 'Strategi membangun dan mengelola komunitas online yang loyal. Dari moderasi grup hingga strategi engagement anggota.',
-    icon: 'Users',
-    order_index: 1
-  },
-  {
-    id: '3',
-    title: 'Content Strategy',
-    description: 'Perencanaan konten kreatif (Meme Marketing & Copywriting) untuk meningkatkan Brand Awareness dan interaksi audiens.',
-    icon: 'PenTool',
-    order_index: 2
-  }
+  { id: '1', title: 'Web Development', description: 'Pembuatan website modern yang cepat, responsif, dan SEO-friendly.', icon: 'Monitor', order_index: 0 },
+  { id: '2', title: 'Community Management', description: 'Strategi membangun dan mengelola komunitas online yang loyal.', icon: 'Users', order_index: 1 },
+  { id: '3', title: 'Content Strategy', description: 'Perencanaan konten kreatif untuk meningkatkan Brand Awareness.', icon: 'PenTool', order_index: 2 }
 ];
 
-// Color schemes for services
 const colorSchemes = [
   { color: 'text-blue-600', bg: 'bg-blue-50', border: 'border-blue-100' },
   { color: 'text-green-600', bg: 'bg-green-50', border: 'border-green-100' },
@@ -51,6 +32,7 @@ interface ServiceData {
 }
 
 const Services: React.FC = () => {
+  const { t } = useTranslation();
   const [services, setServices] = useState<ServiceData[]>(defaultServices);
   const [loading, setLoading] = useState(true);
 
@@ -69,7 +51,6 @@ const Services: React.FC = () => {
         }
       } catch (error) {
         console.error('Error fetching services:', error);
-        // Keep default services on error
       } finally {
         setLoading(false);
       }
@@ -83,10 +64,10 @@ const Services: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal width="100%">
           <div className="text-center mb-16">
-            <span className="text-primary font-bold tracking-wider uppercase text-sm">Apa yang saya tawarkan?</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mt-2 mb-4">Layanan Profesional</h2>
+            <span className="text-primary font-bold tracking-wider uppercase text-sm">{t('services.section_label')}</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mt-2 mb-4">{t('services.title')}</h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
-              Solusi digital yang menggabungkan teknis coding dan strategi bisnis untuk membantu pertumbuhan proyek Anda.
+              {t('services.description')}
             </p>
           </div>
         </Reveal>
@@ -108,13 +89,13 @@ const Services: React.FC = () => {
                       <IconComponent size={28} />
                     </div>
 
-                    <h3 className="text-xl font-bold text-slate-900 mb-3">{service.title}</h3>
+                    <TranslatedText as="h3" className="text-xl font-bold text-slate-900 mb-3">{service.title}</TranslatedText>
                     <p className="text-slate-600 mb-6 leading-relaxed">
-                      {service.description}
+                      <TranslatedText>{service.description}</TranslatedText>
                     </p>
 
                     <a href="#contact" className={`inline-flex items-center text-sm font-bold ${scheme.color} hover:underline`}>
-                      Konsultasi Sekarang <ArrowRight className="w-4 h-4 ml-1" />
+                      {t('services.cta')} <ArrowRight className="w-4 h-4 ml-1" />
                     </a>
                   </div>
                 </Reveal>

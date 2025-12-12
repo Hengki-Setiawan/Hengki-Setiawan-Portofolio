@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Users, ShoppingBag, Zap, Award, Loader2 } from 'lucide-react';
 import Reveal from './Reveal';
 import { supabase } from '../lib/supabase';
+import { useTranslation } from 'react-i18next';
 
 // Icon mapping
 const iconMap: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
@@ -16,21 +17,13 @@ const colorSchemes = [
   { color: 'text-purple-600', bg: 'bg-purple-50' },
 ];
 
-// Default stats as fallback
-const defaultStats = [
-  { id: 1, label: 'Anggota Komunitas', value: 5000, suffix: '+', icon: 'Users', desc: 'Aktif & Solid' },
-  { id: 2, label: 'Produk Terjual', value: 200, suffix: '+', icon: 'ShoppingBag', desc: 'Kaos & Merch' },
-  { id: 3, label: 'Jangkauan Konten', value: 100, suffix: 'k+', icon: 'Zap', desc: 'Views per Bulan' },
-  { id: 4, label: 'Pengalaman', value: 3, suffix: '+', icon: 'Award', desc: 'Tahun Berkarya' },
-];
-
 interface StatItem {
   id: number;
-  label: string;
+  labelKey: string;
+  descKey: string;
   value: number;
   suffix: string;
   icon: string;
-  desc: string;
 }
 
 // Animated Counter Component
@@ -65,11 +58,8 @@ const AnimatedCounter: React.FC<{ value: number; suffix: string }> = ({ value, s
     const update = () => {
       const now = Date.now();
       const progress = Math.min((now - startTime) / duration, 1);
-
-      // Easing function
       const easeOutQuart = 1 - Math.pow(1 - progress, 4);
       const currentValue = Math.floor(start + (end - start) * easeOutQuart);
-
       setDisplayValue(currentValue);
 
       if (progress < 1) {
@@ -95,6 +85,15 @@ const AnimatedCounter: React.FC<{ value: number; suffix: string }> = ({ value, s
 };
 
 const Stats: React.FC = () => {
+  const { t } = useTranslation();
+
+  const defaultStats: StatItem[] = [
+    { id: 1, labelKey: 'stats.community', value: 5000, suffix: '+', icon: 'Users', descKey: 'stats.community_desc' },
+    { id: 2, labelKey: 'stats.products', value: 200, suffix: '+', icon: 'ShoppingBag', descKey: 'stats.products_desc' },
+    { id: 3, labelKey: 'stats.reach', value: 100, suffix: 'k+', icon: 'Zap', descKey: 'stats.reach_desc' },
+    { id: 4, labelKey: 'stats.years', value: 3, suffix: '+', icon: 'Award', descKey: 'stats.years_desc' },
+  ];
+
   const [stats, setStats] = useState<StatItem[]>(defaultStats);
   const [loading, setLoading] = useState(true);
 
@@ -120,11 +119,11 @@ const Stats: React.FC = () => {
 
               transformedStats.push({
                 id: index + 1,
-                label: defaultStat?.label || category,
+                labelKey: defaultStat?.labelKey || 'stats.community',
                 value: totalValue,
                 suffix: defaultStat?.suffix || '+',
                 icon: defaultStat?.icon || 'Users',
-                desc: defaultStat?.desc || '',
+                descKey: defaultStat?.descKey || 'stats.community_desc',
               });
             }
           });
@@ -163,8 +162,8 @@ const Stats: React.FC = () => {
                       <IconComponent size={24} />
                     </div>
                     <AnimatedCounter value={stat.value} suffix={stat.suffix} />
-                    <div className="text-sm font-bold text-slate-700 uppercase tracking-wide">{stat.label}</div>
-                    <div className="text-xs text-slate-500 mt-1">{stat.desc}</div>
+                    <div className="text-sm font-bold text-slate-700 uppercase tracking-wide">{t(stat.labelKey)}</div>
+                    <div className="text-xs text-slate-500 mt-1">{t(stat.descKey)}</div>
                   </div>
                 );
               })}

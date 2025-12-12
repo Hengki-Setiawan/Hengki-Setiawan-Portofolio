@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Layout, Share2, TrendingUp, Code2, Zap, PenTool, Loader2 } from 'lucide-react';
 import Reveal from './Reveal';
 import { supabase } from '../lib/supabase';
+import { useTranslation } from 'react-i18next';
+import TranslatedText from './TranslatedText';
 
 interface Skill {
   id: string;
@@ -21,6 +23,7 @@ const iconMap: Record<string, React.FC<any>> = {
 };
 
 const Skills: React.FC = () => {
+  const { t } = useTranslation();
   const [skills, setSkills] = useState<Skill[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -74,9 +77,9 @@ const Skills: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal width="100%">
           <div className="text-center mb-16 max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Keahlian & Kompetensi</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">{t('skills.title')}</h2>
             <p className="text-slate-600 text-lg">
-              Kombinasi unik antara pemahaman bisnis, kreativitas konten, dan kemampuan teknis.
+              {t('skills.description')}
             </p>
           </div>
         </Reveal>
@@ -91,12 +94,12 @@ const Skills: React.FC = () => {
                   <div className={`w-14 h-14 ${colors.bg} ${colors.text} rounded-xl flex items-center justify-center mb-6`}>
                     {getIcon(skill.icon_name)}
                   </div>
-                  <h3 className="text-xl font-bold text-slate-900 mb-4">{skill.title}</h3>
+                  <TranslatedText as="h3" className="text-xl font-bold text-slate-900 mb-4">{skill.title}</TranslatedText>
                   <ul className="space-y-4">
                     {skill.items.map((item, itemIdx) => (
                       <li key={itemIdx} className="flex items-start">
                         <div className={`w-1.5 h-1.5 ${colors.dot} rounded-full mt-2 mr-3`}></div>
-                        <span className="block font-medium text-slate-800">{item}</span>
+                        <TranslatedText as="span" className="block font-medium text-slate-800">{item}</TranslatedText>
                       </li>
                     ))}
                   </ul>

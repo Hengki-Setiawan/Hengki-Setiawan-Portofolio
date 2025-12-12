@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import Reveal from './Reveal';
 import { supabase } from '../lib/supabase';
+import { useTranslation } from 'react-i18next';
 
 // Default stats values (used as fallback)
 const DEFAULT_STATS: Record<string, number> = {
@@ -117,6 +118,7 @@ const CountUp = ({ end, duration = 2000, suffix = "" }: { end: number, duration?
 };
 
 const Connect: React.FC = () => {
+    const { t } = useTranslation();
     const stats = useSocialStats();
     const totalCommunity = stats.fb_depresi + stats.fb_bahagia + stats.fb_skizo;
 
@@ -130,10 +132,10 @@ const Connect: React.FC = () => {
                 <Reveal width="100%">
                     <div className="text-center mb-16">
                         <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-6">
-                            Connect & <span className="text-primary">Collaborate</span>
+                            {t('connect.title')} <span className="text-primary">{t('connect.title_highlight')}</span>
                         </h2>
                         <p className="text-slate-600 text-lg max-w-2xl mx-auto">
-                            Bergabung dengan komunitas kami yang terus berkembang. Data di bawah ini diupdate secara <span className="text-green-600 font-bold bg-green-100 px-2 py-0.5 rounded-full text-sm animate-pulse">LIVE</span>
+                            {t('connect.description')} <span className="text-green-600 font-bold bg-green-100 px-2 py-0.5 rounded-full text-sm animate-pulse">{t('connect.live')}</span>
                         </p>
                     </div>
                 </Reveal>
@@ -145,7 +147,7 @@ const Connect: React.FC = () => {
                         <Reveal delay={0.1} width="100%">
                             <div className="flex items-center gap-3 mb-6">
                                 <ShoppingBag className="w-6 h-6 text-primary" />
-                                <h3 className="text-xl font-bold text-slate-800">Official Store</h3>
+                                <h3 className="text-xl font-bold text-slate-800">{t('connect.official_store')}</h3>
                                 <span className="flex h-3 w-3 relative">
                                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                                     <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
@@ -173,7 +175,7 @@ const Connect: React.FC = () => {
                                         </svg>
                                     </div>
                                     <div className="text-right">
-                                        <div className="text-xs text-slate-400 mb-1">Total Terjual</div>
+                                        <div className="text-xs text-slate-400 mb-1">{t('connect.total_sold')}</div>
                                         <div className="text-xl font-bold text-slate-800 flex items-center justify-end gap-1">
                                             <TrendingUp className="w-4 h-4 text-green-500" />
                                             <CountUp end={stats.shopee_sold} suffix="+" />
@@ -186,13 +188,13 @@ const Connect: React.FC = () => {
                                 <div className="flex items-center gap-1 text-yellow-500 text-sm mb-4 bg-yellow-50 inline-flex px-2 py-1 rounded-lg">
                                     <Star className="w-4 h-4 fill-current" />
                                     <span className="font-bold text-slate-700">4.9</span>
-                                    <span className="text-slate-400 text-xs ml-1">Rating Toko</span>
+                                    <span className="text-slate-400 text-xs ml-1">{t('connect.store_rating')}</span>
                                 </div>
 
                                 <div className="flex items-center justify-between text-sm text-slate-500 border-t border-slate-100 pt-4 mt-2">
                                     <div className="flex items-center gap-2">
                                         <Eye className="w-4 h-4 text-green-500" />
-                                        <span className="text-xs"><span className="font-bold text-green-600">12</span> orang melihat</span>
+                                        <span className="text-xs"><span className="font-bold text-green-600">12</span> {t('connect.people_viewing')}</span>
                                     </div>
                                     <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
                                 </div>
@@ -248,7 +250,7 @@ const Connect: React.FC = () => {
                         <Reveal delay={0.2} width="100%">
                             <div className="flex items-center gap-3 mb-6">
                                 <Users className="w-6 h-6 text-primary" />
-                                <h3 className="text-xl font-bold text-slate-800">Community</h3>
+                                <h3 className="text-xl font-bold text-slate-800">{t('connect.facebook_groups')}</h3>
                                 <span className="bg-green-100 text-green-600 text-xs font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
                                     <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
                                     3 Groups
@@ -286,7 +288,7 @@ const Connect: React.FC = () => {
                                         </div>
                                         <div className="text-right">
                                             <div className="text-lg font-bold text-blue-600"><CountUp end={stats.fb_depresi} /></div>
-                                            <div className="text-[10px] text-slate-500 uppercase font-semibold">Anggota</div>
+                                            <div className="text-[10px] text-slate-500 uppercase font-semibold">{t('connect.members')}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -320,7 +322,7 @@ const Connect: React.FC = () => {
                                         </div>
                                         <div className="text-right">
                                             <div className="text-lg font-bold text-yellow-600"><CountUp end={stats.fb_bahagia} /></div>
-                                            <div className="text-[10px] text-slate-500 uppercase font-semibold">Anggota</div>
+                                            <div className="text-[10px] text-slate-500 uppercase font-semibold">{t('connect.members')}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -355,7 +357,7 @@ const Connect: React.FC = () => {
                                         </div>
                                         <div className="text-right">
                                             <div className="text-lg font-bold text-purple-600"><CountUp end={stats.fb_skizo} suffix="+" /></div>
-                                            <div className="text-[10px] text-slate-500 uppercase font-semibold">Anggota</div>
+                                            <div className="text-[10px] text-slate-500 uppercase font-semibold">{t('connect.members')}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -369,7 +371,7 @@ const Connect: React.FC = () => {
                                     <div className="text-3xl font-bold mb-1">
                                         <CountUp end={totalCommunity} suffix="+" />
                                     </div>
-                                    <div className="text-sm opacity-90">Total Komunitas Member</div>
+                                    <div className="text-sm opacity-90">{t('connect.total_members')}</div>
                                     <div className="text-xs opacity-70 mt-2">🚀 Meme Creator & Community Builder</div>
                                 </div>
                             </div>
@@ -381,7 +383,7 @@ const Connect: React.FC = () => {
                         <Reveal delay={0.3} width="100%">
                             <div className="flex items-center gap-3 mb-6">
                                 <Globe className="w-6 h-6 text-primary" />
-                                <h3 className="text-xl font-bold text-slate-800">Social & Contact</h3>
+                                <h3 className="text-xl font-bold text-slate-800">{t('connect.social_media')}</h3>
                             </div>
                         </Reveal>
 
@@ -394,7 +396,7 @@ const Connect: React.FC = () => {
                                     </div>
                                     <span className="font-bold text-slate-800 text-sm z-10">Instagram</span>
                                     <span className="text-xs text-slate-500 z-10">@hengkimiau</span>
-                                    <div className="mt-2 text-sm font-bold text-slate-800 z-10"><CountUp end={stats.instagram} /> Followers</div>
+                                    <div className="mt-2 text-sm font-bold text-slate-800 z-10"><CountUp end={stats.instagram} /> {t('connect.followers')}</div>
 
                                     {/* Hover Gradient */}
                                     <div className="absolute inset-0 bg-gradient-to-br from-pink-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
@@ -441,7 +443,7 @@ const Connect: React.FC = () => {
                             <div className="bg-white rounded-2xl p-6 shadow-lg mt-6">
                                 <h4 className="font-bold text-slate-800 mb-4 flex items-center gap-2">
                                     <MessageCircle className="w-4 h-4 text-primary" />
-                                    Direct Contact
+                                    {t('connect.direct_contact')}
                                 </h4>
                                 <div className="space-y-3">
                                     <a href="https://wa.me/62895803463032" className="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-50 transition-colors group">

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { AuthProvider } from './lib/auth';
@@ -22,35 +22,40 @@ import CustomCursor from './components/ui/CustomCursor';
 import ParticlesBackground from './components/ui/ParticlesBackground';
 
 // Pages
-import ServicesPage from './pages/ServicesPage';
-import ExperiencePage from './pages/ExperiencePage';
-import WebsitesPage from './pages/WebsitesPage';
-import ContactPage from './pages/ContactPage';
-import ProjectDetailPage from './pages/ProjectDetailPage';
+const ServicesPage = React.lazy(() => import('./pages/ServicesPage'));
+const ExperiencePage = React.lazy(() => import('./pages/ExperiencePage'));
+const WebsitesPage = React.lazy(() => import('./pages/WebsitesPage'));
+const ContactPage = React.lazy(() => import('./pages/ContactPage'));
+const ProjectDetailPage = React.lazy(() => import('./pages/ProjectDetailPage'));
+const CVPage = React.lazy(() => import('./pages/CVPage'));
+const GuestbookPage = React.lazy(() => import('./pages/GuestbookPage'));
+const BlogPage = React.lazy(() => import('./pages/BlogPage'));
+const ArticlePage = React.lazy(() => import('./pages/ArticlePage'));
 
 // Admin imports
-import AdminMessages from './components/admin/AdminMessages';
-import AdminSubscribers from './components/admin/AdminSubscribers';
-import AdminProjects from './components/admin/AdminProjects';
-import AdminTestimonials from './components/admin/AdminTestimonials';
-import AdminStats from './components/admin/AdminStats';
-import AdminProfile from './components/admin/AdminProfile';
-import AdminServices from './components/admin/AdminServices';
-import AdminFAQ from './components/admin/AdminFAQ';
-import AdminExperience from './components/admin/AdminExperience';
-import AdminHero from './components/admin/AdminHero';
-import AdminAbout from './components/admin/AdminAbout';
-import AdminLogin from './components/admin/AdminLogin';
-import AdminLayout from './components/admin/AdminLayout';
-import AdminDashboard from './components/admin/AdminDashboard';
-import ProtectedRoute from './components/admin/ProtectedRoute';
-import NotFound from './components/NotFound';
-import AdminAchievements from './components/admin/AdminAchievements';
-import AdminMediaShowcase from './components/admin/AdminMediaShowcase';
-import AdminWebsites from './components/admin/AdminWebsites';
-import AdminSkills from './components/admin/AdminSkills';
-import AdminCV from './components/admin/AdminCV';
-import CVPage from './pages/CVPage';
+const AdminMessages = React.lazy(() => import('./components/admin/AdminMessages'));
+const AdminSubscribers = React.lazy(() => import('./components/admin/AdminSubscribers'));
+const AdminProjects = React.lazy(() => import('./components/admin/AdminProjects'));
+const AdminTestimonials = React.lazy(() => import('./components/admin/AdminTestimonials'));
+const AdminStats = React.lazy(() => import('./components/admin/AdminStats'));
+const AdminProfile = React.lazy(() => import('./components/admin/AdminProfile'));
+const AdminServices = React.lazy(() => import('./components/admin/AdminServices'));
+const AdminFAQ = React.lazy(() => import('./components/admin/AdminFAQ'));
+const AdminExperience = React.lazy(() => import('./components/admin/AdminExperience'));
+const AdminHero = React.lazy(() => import('./components/admin/AdminHero'));
+const AdminAbout = React.lazy(() => import('./components/admin/AdminAbout'));
+const AdminLogin = React.lazy(() => import('./components/admin/AdminLogin'));
+const AdminLayout = React.lazy(() => import('./components/admin/AdminLayout'));
+const AdminDashboard = React.lazy(() => import('./components/admin/AdminDashboard'));
+const ProtectedRoute = React.lazy(() => import('./components/admin/ProtectedRoute'));
+const NotFound = React.lazy(() => import('./components/NotFound'));
+const AdminAchievements = React.lazy(() => import('./components/admin/AdminAchievements'));
+const AdminMediaShowcase = React.lazy(() => import('./components/admin/AdminMediaShowcase'));
+const AdminWebsites = React.lazy(() => import('./components/admin/AdminWebsites'));
+const AdminSkills = React.lazy(() => import('./components/admin/AdminSkills'));
+const AdminCV = React.lazy(() => import('./components/admin/AdminCV'));
+const AdminGuestbook = React.lazy(() => import('./components/admin/AdminGuestbook'));
+const AdminArticles = React.lazy(() => import('./components/admin/AdminArticles'));
 
 // HomePage - combines Home + About
 const HomePage = () => (
@@ -85,47 +90,54 @@ const App: React.FC = () => {
       <AuthProvider>
         <ToastProvider>
           <BrowserRouter>
-            <Routes>
-              {/* Public Pages */}
-              <Route path="/" element={<HomePage />} />
-              <Route path="/services" element={<ServicesPage />} />
-              <Route path="/experience" element={<ExperiencePage />} />
-              <Route path="/websites" element={<WebsitesPage />} />
-              <Route path="/contact" element={<ContactPage />} />
-              <Route path="/cv" element={<CVPage />} />
-              <Route path="/projects/:id" element={<ProjectDetailPage />} />
-              {/* Admin Routes */}
-              <Route path="/admin/login" element={<AdminLogin />} />
-              <Route
-                path="/admin/*"
-                element={
-                  <ProtectedRoute>
-                    <AdminLayout />
-                  </ProtectedRoute>
-                }
-              >
-                <Route index element={<AdminDashboard />} />
-                <Route path="profile" element={<AdminProfile />} />
-                <Route path="hero" element={<AdminHero />} />
-                <Route path="about" element={<AdminAbout />} />
-                <Route path="stats" element={<AdminStats />} />
-                <Route path="services" element={<AdminServices />} />
-                <Route path="faq" element={<AdminFAQ />} />
-                <Route path="experience" element={<AdminExperience />} />
-                <Route path="projects" element={<AdminProjects />} />
-                <Route path="testimonials" element={<AdminTestimonials />} />
-                <Route path="messages" element={<AdminMessages />} />
-                <Route path="subscribers" element={<AdminSubscribers />} />
-                <Route path="achievements" element={<AdminAchievements />} />
-                <Route path="media" element={<AdminMediaShowcase />} />
-                <Route path="websites" element={<AdminWebsites />} />
-                <Route path="skills" element={<AdminSkills />} />
-                <Route path="cv" element={<AdminCV />} />
-              </Route>
+            <Suspense fallback={<LoadingScreen />}>
+              <Routes>
+                {/* Public Pages */}
+                <Route path="/" element={<HomePage />} />
+                <Route path="/services" element={<ServicesPage />} />
+                <Route path="/experience" element={<ExperiencePage />} />
+                <Route path="/websites" element={<WebsitesPage />} />
+                <Route path="/contact" element={<ContactPage />} />
+                <Route path="/guestbook" element={<GuestbookPage />} />
+                <Route path="/blog" element={<BlogPage />} />
+                <Route path="/blog/:slug" element={<ArticlePage />} />
+                <Route path="/cv" element={<CVPage />} />
+                <Route path="/projects/:id" element={<ProjectDetailPage />} />
+                {/* Admin Routes */}
+                <Route path="/admin/login" element={<AdminLogin />} />
+                <Route
+                  path="/admin/*"
+                  element={
+                    <ProtectedRoute>
+                      <AdminLayout />
+                    </ProtectedRoute>
+                  }
+                >
+                  <Route index element={<AdminDashboard />} />
+                  <Route path="profile" element={<AdminProfile />} />
+                  <Route path="hero" element={<AdminHero />} />
+                  <Route path="about" element={<AdminAbout />} />
+                  <Route path="stats" element={<AdminStats />} />
+                  <Route path="services" element={<AdminServices />} />
+                  <Route path="faq" element={<AdminFAQ />} />
+                  <Route path="experience" element={<AdminExperience />} />
+                  <Route path="projects" element={<AdminProjects />} />
+                  <Route path="testimonials" element={<AdminTestimonials />} />
+                  <Route path="messages" element={<AdminMessages />} />
+                  <Route path="subscribers" element={<AdminSubscribers />} />
+                  <Route path="achievements" element={<AdminAchievements />} />
+                  <Route path="media" element={<AdminMediaShowcase />} />
+                  <Route path="websites" element={<AdminWebsites />} />
+                  <Route path="skills" element={<AdminSkills />} />
+                  <Route path="cv" element={<AdminCV />} />
+                  <Route path="guestbook" element={<AdminGuestbook />} />
+                  <Route path="articles" element={<AdminArticles />} />
+                </Route>
 
-              {/* 404 */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+                {/* 404 */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
             <N8nChatWidget />
             <ParticlesBackground />
           </BrowserRouter>

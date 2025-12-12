@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { GraduationCap, MapPin, Target, Briefcase, Loader2 } from 'lucide-react';
 import Reveal from './Reveal';
 import { supabase } from '../lib/supabase';
+import Guestbook from './Guestbook';
+import { useTranslation } from 'react-i18next';
 
 interface AboutContent {
   section_label: string;
@@ -27,25 +29,6 @@ interface ImageItem {
   caption: string;
 }
 
-// Default content as fallback
-const defaultContent: AboutContent = {
-  section_label: 'Tentang Saya',
-  title_1: 'Lebih dari sekadar',
-  title_highlight: 'Mahasiswa.',
-  title_2: 'Seorang Praktisi Digital.',
-  description_1: 'Halo! Saya Hengki Setiawan. Saya percaya bahwa era digital membutuhkan generalis yang spesifik.',
-  description_2: 'Sebagai mahasiswa Bisnis Digital di Universitas Negeri Makassar, saya tidak hanya belajar teori. Saya mempraktikkannya dengan membangun brand clothing sendiri, mengelola komunitas online yang aktif, dan mengembangkan skill teknis dalam pengembangan web & otomasi.',
-  card_1_title: 'Pendidikan',
-  card_1_desc: 'Mahasiswa Bisnis Digital (UNM)',
-  card_1_subdesc: 'Alumni SMK 4 Makassar',
-  card_2_title: 'Fokus Utama',
-  card_2_desc: 'Business Development & Tech',
-  card_3_title: 'Pengalaman',
-  card_3_desc: 'Owner, Admin & Ex-Retail',
-  card_4_title: 'Domisili',
-  card_4_desc: 'Makassar, Indonesia'
-};
-
 const defaultImages: ImageItem[] = [
   {
     src: '/images/hengki-team.jpg',
@@ -60,7 +43,7 @@ const defaultImages: ImageItem[] = [
 ];
 
 const About: React.FC = () => {
-  const [content, setContent] = useState<AboutContent>(defaultContent);
+  const { t } = useTranslation();
   const [images, setImages] = useState<ImageItem[]>(defaultImages);
   const [currentImage, setCurrentImage] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -77,7 +60,6 @@ const About: React.FC = () => {
         if (error) throw error;
 
         if (data && data.length > 0) {
-          const contentMap: Record<string, string> = {};
           const imageList: ImageItem[] = [];
 
           data.forEach((item: any) => {
@@ -87,23 +69,15 @@ const About: React.FC = () => {
                 alt: `Image ${item.key}`,
                 caption: item.value || ''
               });
-            } else {
-              contentMap[item.key] = item.value || '';
             }
           });
 
-          setContent(prev => ({
-            ...prev,
-            ...contentMap
-          }));
-
           if (imageList.length > 0) {
-            setImages(imageList.filter(img => img.src)); // Only keep images with URLs
+            setImages(imageList.filter(img => img.src));
           }
         }
       } catch (error) {
         console.error('Error fetching about content:', error);
-        // Keep default content on error
       } finally {
         setLoading(false);
       }
@@ -112,7 +86,6 @@ const About: React.FC = () => {
     fetchContent();
   }, []);
 
-  // Auto-slide effect every 4 seconds
   useEffect(() => {
     if (images.length <= 1) return;
 
@@ -134,7 +107,6 @@ const About: React.FC = () => {
               <div className="relative">
                 <div className="absolute top-4 left-4 w-full h-full border-2 border-primary/20 rounded-2xl z-0"></div>
 
-                {/* Carousel Container */}
                 <div className="relative bg-slate-100 rounded-2xl overflow-hidden shadow-xl z-10 aspect-[4/5] md:aspect-square">
                   {images.map((image, index) => (
                     <div
@@ -153,7 +125,6 @@ const About: React.FC = () => {
                     </div>
                   ))}
 
-                  {/* Indicator Dots */}
                   <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2 z-20">
                     {images.map((_, index) => (
                       <button
@@ -173,19 +144,19 @@ const About: React.FC = () => {
           {/* Right Column: Content */}
           <div className="order-1 md:order-2">
             <Reveal width="100%">
-              <h4 className="text-primary font-bold tracking-wide uppercase text-sm mb-2">{content.section_label}</h4>
+              <h4 className="text-primary font-bold tracking-wide uppercase text-sm mb-2">{t('about.section_label')}</h4>
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
-                {content.title_1} <span className="text-primary">{content.title_highlight}</span><br />
-                {content.title_2}
+                {t('about.title_1')} <span className="text-primary">{t('about.title_highlight')}</span><br />
+                {t('about.title_2')}
               </h2>
             </Reveal>
 
             <Reveal delay={0.1} width="100%">
               <p className="text-slate-600 mb-6 leading-relaxed text-lg">
-                {content.description_1}
+                {t('about.description_1')}
               </p>
               <p className="text-slate-600 mb-8 leading-relaxed">
-                {content.description_2}
+                {t('about.description_2')}
               </p>
             </Reveal>
 
@@ -196,11 +167,9 @@ const About: React.FC = () => {
                     <GraduationCap size={24} />
                   </div>
                   <div>
-                    <h3 className="font-bold text-slate-900">{content.card_1_title}</h3>
-                    <p className="text-sm text-slate-500">{content.card_1_desc}</p>
-                    {content.card_1_subdesc && (
-                      <p className="text-xs text-slate-400 mt-1">{content.card_1_subdesc}</p>
-                    )}
+                    <h3 className="font-bold text-slate-900">{t('about.education')}</h3>
+                    <p className="text-sm text-slate-500">{t('about.education_desc')}</p>
+                    <p className="text-xs text-slate-400 mt-1">{t('about.education_subdesc')}</p>
                   </div>
                 </div>
               </Reveal>
@@ -211,8 +180,8 @@ const About: React.FC = () => {
                     <Target size={24} />
                   </div>
                   <div>
-                    <h3 className="font-bold text-slate-900">{content.card_2_title}</h3>
-                    <p className="text-sm text-slate-500">{content.card_2_desc}</p>
+                    <h3 className="font-bold text-slate-900">{t('about.focus')}</h3>
+                    <p className="text-sm text-slate-500">{t('about.focus_desc')}</p>
                   </div>
                 </div>
               </Reveal>
@@ -223,8 +192,8 @@ const About: React.FC = () => {
                     <Briefcase size={24} />
                   </div>
                   <div>
-                    <h3 className="font-bold text-slate-900">{content.card_3_title}</h3>
-                    <p className="text-sm text-slate-500">{content.card_3_desc}</p>
+                    <h3 className="font-bold text-slate-900">{t('about.experience')}</h3>
+                    <p className="text-sm text-slate-500">{t('about.experience_desc')}</p>
                   </div>
                 </div>
               </Reveal>
@@ -235,13 +204,17 @@ const About: React.FC = () => {
                     <MapPin size={24} />
                   </div>
                   <div>
-                    <h3 className="font-bold text-slate-900">{content.card_4_title}</h3>
-                    <p className="text-sm text-slate-500">{content.card_4_desc}</p>
+                    <h3 className="font-bold text-slate-900">{t('about.location')}</h3>
+                    <p className="text-sm text-slate-500">{t('about.location_desc')}</p>
                   </div>
                 </div>
               </Reveal>
             </div>
           </div>
+        </div>
+
+        <div className="mt-24">
+          <Guestbook />
         </div>
       </div>
     </section>

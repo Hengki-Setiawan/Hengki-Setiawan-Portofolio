@@ -2,29 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Plus, Minus, HelpCircle, Loader2 } from 'lucide-react';
 import Reveal from './Reveal';
 import { supabase } from '../lib/supabase';
+import { useTranslation } from 'react-i18next';
+import TranslatedText from './TranslatedText';
 
-// Default FAQs as fallback
 const defaultFaqs = [
-  {
-    id: '1',
-    question: "Apakah Anda menerima proyek freelance?",
-    answer: "Ya, saya terbuka untuk proyek freelance, terutama yang berkaitan dengan Web Development (Landing Page/Portfolio) dan strategi manajemen komunitas."
-  },
-  {
-    id: '2',
-    question: "Berapa lama waktu pengerjaan website?",
-    answer: "Tergantung kompleksitasnya. Untuk Landing Page sederhana biasanya memakan waktu 3-7 hari, sedangkan website yang lebih kompleks bisa memakan waktu 2-4 minggu."
-  },
-  {
-    id: '3',
-    question: "Apakah jasa ini termasuk desain?",
-    answer: "Ya, untuk web development saya menggunakan pendekatan 'Code-First' namun tetap memperhatikan estetika UI/UX yang modern dan profesional."
-  },
-  {
-    id: '4',
-    question: "Apa itu 'Vibe Coding'?",
-    answer: "Ini adalah istilah personal saya untuk menggambarkan gaya coding yang mengalir (flow), intuitif, dan menikmati prosesnya, sehingga menghasilkan kode yang tidak hanya berfungsi tapi juga 'berjiwa'."
-  }
+  { id: '1', question: "Apakah Anda menerima proyek freelance?", answer: "Ya, saya terbuka untuk proyek freelance." },
+  { id: '2', question: "Berapa lama waktu pengerjaan website?", answer: "Tergantung kompleksitasnya, 3-7 hari untuk sederhana." },
+  { id: '3', question: "Apakah jasa ini termasuk desain?", answer: "Ya, saya menggunakan pendekatan 'Code-First' dengan UI/UX modern." },
 ];
 
 interface FAQData {
@@ -35,6 +19,7 @@ interface FAQData {
 }
 
 const FAQ: React.FC = () => {
+  const { t } = useTranslation();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [faqs, setFaqs] = useState<FAQData[]>(defaultFaqs as FAQData[]);
   const [loading, setLoading] = useState(true);
@@ -54,7 +39,6 @@ const FAQ: React.FC = () => {
         }
       } catch (error) {
         console.error('Error fetching FAQs:', error);
-        // Keep default FAQs on error
       } finally {
         setLoading(false);
       }
@@ -75,9 +59,9 @@ const FAQ: React.FC = () => {
             <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-slate-100 text-slate-500 mb-4">
               <HelpCircle size={24} />
             </div>
-            <h2 className="text-3xl font-bold text-slate-900 mb-4">Pertanyaan Umum</h2>
+            <h2 className="text-3xl font-bold text-slate-900 mb-4">{t('faq.title')}</h2>
             <p className="text-slate-600">
-              Beberapa hal yang sering ditanyakan oleh klien dan rekan kerja.
+              {t('faq.description')}
             </p>
           </div>
         </Reveal>
@@ -98,7 +82,7 @@ const FAQ: React.FC = () => {
                     className="w-full px-6 py-4 flex items-center justify-between text-left focus:outline-none"
                   >
                     <span className={`font-semibold text-lg ${openIndex === index ? 'text-primary' : 'text-slate-800'}`}>
-                      {faq.question}
+                      <TranslatedText>{faq.question}</TranslatedText>
                     </span>
                     {openIndex === index ? (
                       <Minus className="flex-shrink-0 text-primary" />
@@ -110,7 +94,7 @@ const FAQ: React.FC = () => {
                     className={`px-6 overflow-hidden transition-all duration-300 ease-in-out ${openIndex === index ? 'max-h-48 pb-6 opacity-100' : 'max-h-0 opacity-0'}`}
                   >
                     <p className="text-slate-600 leading-relaxed">
-                      {faq.answer}
+                      <TranslatedText>{faq.answer}</TranslatedText>
                     </p>
                   </div>
                 </div>

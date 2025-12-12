@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import LanguageSwitcher from './LanguageSwitcher';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,10 +19,11 @@ const Navbar: React.FC = () => {
   }, []);
 
   const navLinks = [
-    { name: 'Tentang', href: '/' },
-    { name: 'Portofolio', href: '/services' },
-    { name: 'Perjalanan', href: '/experience' },
-    { name: 'Web Saya', href: '/websites' },
+    { name: t('nav.home'), href: '/' },
+    { name: t('nav.portfolio'), href: '/services' },
+    { name: t('nav.experience'), href: '/experience' },
+    { name: t('nav.websites'), href: '/websites' },
+    { name: t('nav.blog'), href: '/blog' },
   ];
 
   const isActive = (path: string) => {
@@ -59,12 +63,14 @@ const Navbar: React.FC = () => {
                 to="/contact"
                 className="bg-primary text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-primaryDark hover:shadow-lg hover:shadow-primary/30 transition-all transform hover:-translate-y-0.5"
               >
-                Hubungi Saya
+                {t('nav.contact')}
               </Link>
+              <LanguageSwitcher />
             </div>
           </div>
 
-          <div className="-mr-2 flex md:hidden">
+          <div className="-mr-2 flex md:hidden items-center gap-4">
+            <LanguageSwitcher />
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="inline-flex items-center justify-center p-2 rounded-md text-slate-300 hover:text-white hover:bg-white/10 focus:outline-none"
@@ -96,7 +102,7 @@ const Navbar: React.FC = () => {
             onClick={() => setIsOpen(false)}
             className="block w-full text-center mt-4 px-3 py-3 rounded-md font-bold bg-primary text-white hover:bg-primaryDark"
           >
-            Hubungi Saya
+            {t('nav.contact')}
           </Link>
         </div>
       </div>

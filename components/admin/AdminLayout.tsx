@@ -23,7 +23,9 @@ import {
     Globe,
     Zap,
     FileText,
-    Rocket
+    Rocket,
+    BookOpen,
+    Mail
 } from 'lucide-react';
 
 const AdminLayout: React.FC = () => {
@@ -54,7 +56,9 @@ const AdminLayout: React.FC = () => {
         { icon: Rocket, label: 'Ventures', path: '/admin/ventures' },
         { icon: FileText, label: 'CV / Resume', path: '/admin/cv' },
         { icon: Quote, label: 'Testimonials', path: '/admin/testimonials' },
-        { icon: MessageSquare, label: 'Messages', path: '/admin/messages' },
+        { icon: BookOpen, label: 'Buku Tamu', path: '/admin/guestbook' },
+        { icon: FileText, label: 'Artikel', path: '/admin/articles' },
+        { icon: Mail, label: 'Messages', path: '/admin/messages' },
         { icon: Users, label: 'Subscribers', path: '/admin/subscribers' },
     ];
 
