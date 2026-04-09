@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { supabase } from '../../lib/supabase';
+import { db } from '../../lib/db';
 import { Trash2, Edit2, Plus, Loader2, X } from 'lucide-react';
 import { useToast } from '../ui/Toast';
 
@@ -34,7 +34,7 @@ const AdminProjects: React.FC = () => {
 
     const fetchProjects = async () => {
         try {
-            const { data, error } = await supabase
+            const { data, error } = await db
                 .from('projects')
                 .select('*')
                 .order('id', { ascending: true });
@@ -55,7 +55,7 @@ const AdminProjects: React.FC = () => {
         try {
             if (editingProject) {
                 // Update
-                const { error } = await supabase
+                const { error } = await db
                     .from('projects')
                     .update(formData)
                     .eq('id', editingProject.id);
@@ -63,7 +63,7 @@ const AdminProjects: React.FC = () => {
                 if (error) throw error;
             } else {
                 // Create
-                const { error } = await supabase
+                const { error } = await db
                     .from('projects')
                     .insert([formData]);
 
@@ -97,7 +97,7 @@ const AdminProjects: React.FC = () => {
         if (!confirm('Are you sure you want to delete this project?')) return;
 
         try {
-            const { error } = await supabase
+            const { error } = await db
                 .from('projects')
                 .delete()
                 .eq('id', id);

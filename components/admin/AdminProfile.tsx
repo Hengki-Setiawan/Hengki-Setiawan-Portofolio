@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../../lib/supabase';
+import { db } from '../../lib/db';
 import { Save, RefreshCw, User, Camera } from 'lucide-react';
 
 interface ContentItem {
@@ -24,7 +24,7 @@ const AdminProfile: React.FC = () => {
     const fetchContent = async () => {
         setLoading(true);
         try {
-            const { data, error } = await supabase
+            const { data, error } = await db
                 .from('site_content')
                 .select('key, value');
 
@@ -57,7 +57,7 @@ const AdminProfile: React.FC = () => {
 
         try {
             for (const [key, value] of Object.entries(content)) {
-                const { error } = await supabase
+                const { error } = await db
                     .from('site_content')
                     .upsert({ key, value, updated_at: new Date().toISOString() }, { onConflict: 'key' });
 

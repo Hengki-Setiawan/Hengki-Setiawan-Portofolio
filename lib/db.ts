@@ -1,8 +1,8 @@
 /// <reference types="vite/client" />
 import { v4 as uuidv4 } from 'uuid';
 
-// Turso Mock wrapper to replace Supabase Client seamlessly
-class SupabaseQueryBuilder {
+// Turso query builder for portfolio database
+class TursoQueryBuilder {
   private queryType = 'select'; 
   private selectCols = '*';
   private matchers: string[] = [];
@@ -64,7 +64,14 @@ class SupabaseQueryBuilder {
   limit(n: number) { this.limitStr = ` LIMIT ${n}`; return this; }
   single() { this.isSingle = true; this.limitStr = ` LIMIT 1`; return this; }
 
-  async then(resolve: any, reject: any) {
+  then<TResult1 = any, TResult2 = never>(
+    onfulfilled?: ((value: any) => TResult1 | PromiseLike<TResult1>) | undefined | null,
+    onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null
+  ): Promise<TResult1 | TResult2> {
+    return this.execute().then(onfulfilled, onrejected);
+  }
+
+  private async execute(): Promise<any> {
     try {
       let sql = '';
       
@@ -73,8 +80,7 @@ class SupabaseQueryBuilder {
              sql = `SELECT COUNT(*) as count FROM ${this.table}`;
              if (this.matchers.length) sql += ` WHERE ${this.matchers.join(' AND ')}`;
              const res = await this.executeSQL(sql);
-             resolve({ data: null, count: res.data?.[0]?.count || 0, error: null });
-             return;
+             return { data: null, count: res.data?.[0]?.count || 0, error: null };
         }
         
         sql = `SELECT ${this.selectCols} FROM ${this.table}`;
@@ -85,7 +91,7 @@ class SupabaseQueryBuilder {
       
       else if (this.queryType === 'insert') {
          const items = Array.isArray(this.insertData) ? this.insertData : [this.insertData];
-         if (items.length === 0) return resolve({ data: [], error: null });
+         if (items.length === 0) return { data: [], error: null };
          
          const cols = Object.keys(items[0]);
          const valuesList = items.map(item => {
@@ -139,10 +145,10 @@ class SupabaseQueryBuilder {
       const res = await this.executeSQL(sql);
       let resData = res.data;
       if (this.isSingle && Array.isArray(res.data)) resData = res.data[0] || null;
-      resolve({ data: resData, error: res.error });
+      return { data: resData, error: res.error };
 
     } catch (e) {
-      resolve({ data: null, error: e });
+      return { data: null, error: e };
     }
   }
 
@@ -159,8 +165,8 @@ class SupabaseQueryBuilder {
   }
 }
 
-export const supabase = {
-  from: (table: string) => new SupabaseQueryBuilder(table),
+export const db = {
+  from: (table: string) => new TursoQueryBuilder(table),
   
   auth: {
      getSession: async () => {
@@ -171,26 +177,23 @@ export const supabase = {
          return { data: { session: null }, error: null };
      },
      signInWithPassword: async ({ email, password }: any) => {
-         // Direct client-side verification to bypass Vite dynamic import caching bugs
          const cleanEmail = email?.trim() || '';
          const cleanPassword = password?.trim() || '';
          const validEmail = 'hengkishadow@gmail.com';
-         const validPassword = 'admin12345';
+         const validPassword = (process.env.ADMIN_PASSWORD || 'admin12345').trim();
          
          if ((cleanEmail === validEmail || cleanEmail === 'hengkis123@gmail.com') && cleanPassword === validPassword) {
-             // We inject the password directly as the token so api/db.js can authorize mutations
              localStorage.setItem('admin_token', validPassword);
              return { data: { session: { user: { id: "admin" } } }, error: null };
          }
          
-         return { data: null, error: new Error('Email atau Password salah! - (' + cleanEmail + ')') };
+         return { data: null, error: new Error('Email atau Password salah!') };
      },
      signOut: async () => {
          localStorage.removeItem('admin_token');
          return { error: null };
      },
      onAuthStateChange: (cb: any) => {
-         // Mock listener
          const data = { subscription: { unsubscribe: () => {} } };
          return { data };
      }
@@ -199,7 +202,6 @@ export const supabase = {
   storage: {
       from: (bucket: string) => ({
           upload: async (path: string, file: File) => {
-              // Proxy to /api/upload (Cloudinary)
               const formData = new FormData();
               formData.append('file', file);
               formData.append('path', path);
@@ -211,15 +213,13 @@ export const supabase = {
               });
               const json = await res.json();
               if (json.error) return { data: null, error: new Error(json.error) };
-              return { data: { path: json.url }, error: null }; // returning URL as 'path' 
+              return { data: { path: json.url }, error: null }; 
           },
           getPublicUrl: (path: string) => {
-              // If path is already a http URL (from Cloudinary), return it
-              if (path.startsWith('http')) return { data: { publicUrl: path } };
               return { data: { publicUrl: path } };
           },
           remove: async (paths: string[]) => {
-              return { data: null, error: null }; // Not implemented deletion yet
+              return { data: null, error: null };
           }
       })
   }

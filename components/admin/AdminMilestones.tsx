@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../../lib/supabase';
+import { db } from '../../lib/db';
 import { Plus, Trash2, Save, RefreshCw, Loader2, Calendar, GripVertical } from 'lucide-react';
 import { useToast } from '../ui/Toast';
 
@@ -33,7 +33,7 @@ const AdminMilestones: React.FC = () => {
     const fetchMilestones = async () => {
         setLoading(true);
         try {
-            const { data, error } = await supabase
+            const { data, error } = await db
                 .from('milestones')
                 .select('*')
                 .order('order_index', { ascending: true });
@@ -79,7 +79,7 @@ const AdminMilestones: React.FC = () => {
         }
 
         try {
-            const { error } = await supabase.from('milestones').delete().eq('id', id);
+            const { error } = await db.from('milestones').delete().eq('id', id);
             if (error) throw error;
             setMilestones(prev => prev.filter(m => m.id !== id));
             showToast('Milestone dihapus', 'success');
@@ -95,10 +95,10 @@ const AdminMilestones: React.FC = () => {
                 const { id, ...data } = milestone;
 
                 if (id.startsWith('new-')) {
-                    const { error } = await supabase.from('milestones').insert(data);
+                    const { error } = await db.from('milestones').insert(data);
                     if (error) throw error;
                 } else {
-                    const { error } = await supabase
+                    const { error } = await db
                         .from('milestones')
                         .update({ ...data, updated_at: new Date().toISOString() })
                         .eq('id', id);

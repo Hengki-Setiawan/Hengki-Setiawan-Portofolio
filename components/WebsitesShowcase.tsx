@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabase';
+import { db } from '../lib/db';
 import { ExternalLink, Loader2, Globe, Star } from 'lucide-react';
 import Reveal from './Reveal';
 

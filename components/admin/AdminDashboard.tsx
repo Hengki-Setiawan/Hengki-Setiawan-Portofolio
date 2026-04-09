@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { supabase } from '../../lib/supabase';
+import { db } from '../../lib/db';
 import { MessageSquare, Briefcase, Quote, Users, RefreshCw, Layers, Sparkles, ArrowRight, Trash2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
@@ -43,11 +43,11 @@ const AdminDashboard: React.FC = () => {
         setLoading(true);
         try {
             const [messagesData, projectsData, testimonialsData, subscribersData, recentMsgs] = await Promise.all([
-                supabase.from('messages').select('id', { count: 'exact', head: true }),
-                supabase.from('projects').select('id', { count: 'exact', head: true }),
-                supabase.from('testimonials').select('id', { count: 'exact', head: true }),
-                supabase.from('subscribers').select('id', { count: 'exact', head: true }),
-                supabase.from('messages').select('*').order('created_at', { ascending: false }).limit(3)
+                db.from('messages').select('id', { count: 'exact', head: true }),
+                db.from('projects').select('id', { count: 'exact', head: true }),
+                db.from('testimonials').select('id', { count: 'exact', head: true }),
+                db.from('subscribers').select('id', { count: 'exact', head: true }),
+                db.from('messages').select('*').order('created_at', { ascending: false }).limit(3)
             ]);
 
             setStats({
@@ -72,7 +72,7 @@ const AdminDashboard: React.FC = () => {
     const deleteMessage = async (id: number) => {
         if (!confirm('Hapus pesan ini?')) return;
         try {
-            await supabase.from('messages').delete().eq('id', id);
+            await db.from('messages').delete().eq('id', id);
             setRecentMessages(prev => prev.filter(m => m.id !== id));
             setStats(prev => ({...prev, messages: prev.messages - 1}));
         } catch (err) {

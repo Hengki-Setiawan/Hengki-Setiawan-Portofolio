@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { GraduationCap, MapPin, Target, Briefcase, Trophy, Loader2 } from 'lucide-react';
 import Reveal from './Reveal';
-import { supabase } from '../lib/supabase';
+import { db } from '../lib/db';
 import { useTranslation } from 'react-i18next';
 
 interface ImageItem {
@@ -32,7 +32,7 @@ const About: React.FC = () => {
   useEffect(() => {
     const fetchContent = async () => {
       try {
-        const { data, error } = await supabase
+        const { data, error } = await db
           .from('site_content')
           .select('*')
           .eq('section', 'about')

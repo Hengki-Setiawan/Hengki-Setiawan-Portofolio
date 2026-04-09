@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { supabase } from '../lib/supabase';
+import { db } from '../lib/db';
 import { Play, Pause, ExternalLink, Loader2, Film, Image as ImageIcon } from 'lucide-react';
 import Reveal from './Reveal';
 
@@ -47,7 +47,7 @@ const MediaShowcase: React.FC = () => {
     useEffect(() => {
         const fetchMedia = async () => {
             try {
-                const { data, error } = await supabase
+                const { data, error } = await db
                     .from('media_showcase')
                     .select('*')
                     .eq('is_active', true)

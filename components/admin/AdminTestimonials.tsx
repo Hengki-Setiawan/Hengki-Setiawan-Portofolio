@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { supabase } from '../../lib/supabase';
+import { db } from '../../lib/db';
 import { Trash2, Edit2, Plus, Loader2, X, Star } from 'lucide-react';
 import { useToast } from '../ui/Toast';
 
@@ -32,7 +32,7 @@ const AdminTestimonials: React.FC = () => {
 
     const fetchTestimonials = async () => {
         try {
-            const { data, error } = await supabase
+            const { data, error } = await db
                 .from('testimonials')
                 .select('*')
                 .order('id', { ascending: true });
@@ -52,14 +52,14 @@ const AdminTestimonials: React.FC = () => {
 
         try {
             if (editingTestimonial) {
-                const { error } = await supabase
+                const { error } = await db
                     .from('testimonials')
                     .update(formData)
                     .eq('id', editingTestimonial.id);
 
                 if (error) throw error;
             } else {
-                const { error } = await supabase
+                const { error } = await db
                     .from('testimonials')
                     .insert([formData]);
 
@@ -93,7 +93,7 @@ const AdminTestimonials: React.FC = () => {
         if (!confirm('Are you sure you want to delete this testimonial?')) return;
 
         try {
-            const { error } = await supabase
+            const { error } = await db
                 .from('testimonials')
                 .delete()
                 .eq('id', id);

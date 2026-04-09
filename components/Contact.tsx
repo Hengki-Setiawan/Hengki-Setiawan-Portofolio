@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Phone, MessageSquare, Send, Loader2 } from 'lucide-react';
 import Reveal from './Reveal';
-import { supabase } from '../lib/supabase';
+import { db } from '../lib/db';
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -25,7 +25,7 @@ const Contact: React.FC = () => {
     setStatus('idle');
 
     try {
-      const { error } = await supabase
+      const { error } = await db
         .from('messages')
         .insert([formData]);
 

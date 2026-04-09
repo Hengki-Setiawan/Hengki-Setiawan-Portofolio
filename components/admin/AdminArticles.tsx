@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../../lib/supabase';
+import { db } from '../../lib/db';
 import { Plus, Trash2, Edit, Search, Loader2, FileText, X, Save } from 'lucide-react';
 import { format } from 'date-fns';
 import { id } from 'date-fns/locale';
@@ -26,7 +26,7 @@ const AdminArticles: React.FC = () => {
 
     const fetchArticles = async () => {
         try {
-            const { data, error } = await supabase
+            const { data, error } = await db
                 .from('articles')
                 .select('*')
                 .order('created_at', { ascending: false });
@@ -49,7 +49,7 @@ const AdminArticles: React.FC = () => {
         if (!window.confirm('Apakah Anda yakin ingin menghapus artikel ini?')) return;
 
         try {
-            const { error } = await supabase
+            const { error } = await db
                 .from('articles')
                 .delete()
                 .eq('id', id);
@@ -82,7 +82,7 @@ const AdminArticles: React.FC = () => {
 
             if (currentArticle.id) {
                 // Update
-                const { error } = await supabase
+                const { error } = await db
                     .from('articles')
                     .update(articleData)
                     .eq('id', currentArticle.id);
@@ -90,7 +90,7 @@ const AdminArticles: React.FC = () => {
                 toast.success('Artikel berhasil diperbarui');
             } else {
                 // Create
-                const { error } = await supabase
+                const { error } = await db
                     .from('articles')
                     .insert([articleData]);
                 if (error) throw error;

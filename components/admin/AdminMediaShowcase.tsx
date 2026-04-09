@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../../lib/supabase';
+import { db } from '../../lib/db';
 import { Plus, Trash2, Save, RefreshCw, Loader2, Film, Upload, ExternalLink, GripVertical } from 'lucide-react';
 import { useToast } from '../ui/Toast';
 
@@ -42,7 +42,7 @@ const AdminMediaShowcase: React.FC = () => {
     const fetchMedia = async () => {
         setLoading(true);
         try {
-            const { data, error } = await supabase
+            const { data, error } = await db
                 .from('media_showcase')
                 .select('*')
                 .order('order_index', { ascending: true });
@@ -73,13 +73,13 @@ const AdminMediaShowcase: React.FC = () => {
             const fileName = `media_${Date.now()}.${fileExt}`;
             const filePath = `media/${fileName}`;
 
-            const { error: uploadError } = await supabase.storage
+            const { error: uploadError } = await db.storage
                 .from('images')
                 .upload(filePath, file);
 
             if (uploadError) throw uploadError;
 
-            const { data: { publicUrl } } = supabase.storage
+            const { data: { publicUrl } } = db.storage
                 .from('images')
                 .getPublicUrl(filePath);
 
@@ -115,7 +115,7 @@ const AdminMediaShowcase: React.FC = () => {
         }
 
         try {
-            const { error } = await supabase.from('media_showcase').delete().eq('id', id);
+            const { error } = await db.from('media_showcase').delete().eq('id', id);
             if (error) throw error;
             setMediaItems(prev => prev.filter(m => m.id !== id));
             showToast('Media dihapus', 'success');
@@ -133,10 +133,10 @@ const AdminMediaShowcase: React.FC = () => {
                 const { id, ...data } = media;
 
                 if (id.startsWith('new-')) {
-                    const { error } = await supabase.from('media_showcase').insert(data);
+                    const { error } = await db.from('media_showcase').insert(data);
                     if (error) throw error;
                 } else {
-                    const { error } = await supabase
+                    const { error } = await db
                         .from('media_showcase')
                         .update({ ...data, updated_at: new Date().toISOString() })
                         .eq('id', id);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../../lib/supabase';
+import { db } from '../../lib/db';
 import { RefreshCw, Plus, Trash2, Edit2, X, HelpCircle, ChevronDown, ChevronUp } from 'lucide-react';
 
 interface FAQ {
@@ -24,7 +24,7 @@ const AdminFAQ: React.FC = () => {
     const fetchFaqs = async () => {
         setLoading(true);
         try {
-            const { data, error } = await supabase
+            const { data, error } = await db
                 .from('faqs')
                 .select('*')
                 .order('order_index', { ascending: true });
@@ -49,14 +49,14 @@ const AdminFAQ: React.FC = () => {
 
         try {
             if (editingFaq) {
-                const { error } = await supabase
+                const { error } = await db
                     .from('faqs')
                     .update({ ...formData })
                     .eq('id', editingFaq.id);
                 if (error) throw error;
                 setSuccess('FAQ berhasil diupdate!');
             } else {
-                const { error } = await supabase
+                const { error } = await db
                     .from('faqs')
                     .insert([{ ...formData, order_index: faqs.length }]);
                 if (error) throw error;
@@ -75,7 +75,7 @@ const AdminFAQ: React.FC = () => {
         if (!confirm('Yakin ingin menghapus FAQ ini?')) return;
 
         try {
-            const { error } = await supabase.from('faqs').delete().eq('id', id);
+            const { error } = await db.from('faqs').delete().eq('id', id);
             if (error) throw error;
             setFaqs(faqs.filter(f => f.id !== id));
             setSuccess('FAQ dihapus!');

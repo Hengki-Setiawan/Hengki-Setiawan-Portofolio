@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../../lib/supabase';
+import { db } from '../../lib/db';
 import { Trash2, Search, Loader2, MessageSquare } from 'lucide-react';
 import { format } from 'date-fns';
 import { id } from 'date-fns/locale';
@@ -20,7 +20,7 @@ const AdminGuestbook: React.FC = () => {
 
     const fetchEntries = async () => {
         try {
-            const { data, error } = await supabase
+            const { data, error } = await db
                 .from('guestbook')
                 .select('*')
                 .order('created_at', { ascending: false });
@@ -43,7 +43,7 @@ const AdminGuestbook: React.FC = () => {
         if (!window.confirm('Apakah Anda yakin ingin menghapus pesan ini?')) return;
 
         try {
-            const { error } = await supabase
+            const { error } = await db
                 .from('guestbook')
                 .delete()
                 .eq('id', id);

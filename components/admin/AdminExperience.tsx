@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../../lib/supabase';
+import { db } from '../../lib/db';
 import { RefreshCw, Plus, Trash2, Edit2, X, Briefcase } from 'lucide-react';
 
 interface Experience {
@@ -25,7 +25,7 @@ const AdminExperience: React.FC = () => {
     const fetchExperiences = async () => {
         setLoading(true);
         try {
-            const { data, error } = await supabase
+            const { data, error } = await db
                 .from('experiences')
                 .select('*')
                 .order('order_index', { ascending: true });
@@ -50,14 +50,14 @@ const AdminExperience: React.FC = () => {
 
         try {
             if (editingExp) {
-                const { error } = await supabase
+                const { error } = await db
                     .from('experiences')
                     .update({ ...formData })
                     .eq('id', editingExp.id);
                 if (error) throw error;
                 setSuccess('Pengalaman berhasil diupdate!');
             } else {
-                const { error } = await supabase
+                const { error } = await db
                     .from('experiences')
                     .insert([{ ...formData, order_index: experiences.length }]);
                 if (error) throw error;
@@ -76,7 +76,7 @@ const AdminExperience: React.FC = () => {
         if (!confirm('Yakin ingin menghapus pengalaman ini?')) return;
 
         try {
-            const { error } = await supabase.from('experiences').delete().eq('id', id);
+            const { error } = await db.from('experiences').delete().eq('id', id);
             if (error) throw error;
             setExperiences(experiences.filter(e => e.id !== id));
             setSuccess('Pengalaman dihapus!');

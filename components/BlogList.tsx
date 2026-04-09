@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabase';
+import { db } from '../lib/db';
 import { Link } from 'react-router-dom';
 import { Calendar, Eye, ArrowRight, Loader2 } from 'lucide-react';
 import Reveal from './Reveal';
@@ -23,7 +23,7 @@ const BlogList: React.FC = () => {
     useEffect(() => {
         const fetchArticles = async () => {
             try {
-                const { data, error } = await supabase
+                const { data, error } = await db
                     .from('articles')
                     .select('*')
                     .eq('is_published', true)

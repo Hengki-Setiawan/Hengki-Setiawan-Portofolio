@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../../lib/supabase';
+import { db } from '../../lib/db';
 import { Save, RefreshCw, BarChart3, Users, ShoppingBag, Globe } from 'lucide-react';
 
 interface SocialStat {
@@ -23,7 +23,7 @@ const AdminStats: React.FC = () => {
         setLoading(true);
         setError(null);
         try {
-            const { data, error } = await supabase
+            const { data, error } = await db
                 .from('social_stats')
                 .select('*')
                 .order('category', { ascending: true });
@@ -63,7 +63,7 @@ const AdminStats: React.FC = () => {
             const updates = stats.filter(stat => stat.value !== editedValues[stat.key]);
 
             for (const stat of updates) {
-                const { error } = await supabase
+                const { error } = await db
                     .from('social_stats')
                     .update({ value: editedValues[stat.key], updated_at: new Date().toISOString() })
                     .eq('key', stat.key);

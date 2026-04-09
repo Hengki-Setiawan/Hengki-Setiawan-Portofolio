@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabase';
+import { db } from '../lib/db';
 import { Send, User, MessageSquare, Clock, Loader2 } from 'lucide-react';
 import Reveal from './Reveal';
 import { formatDistanceToNow } from 'date-fns';
@@ -23,7 +23,7 @@ const Guestbook: React.FC = () => {
 
     const fetchEntries = async () => {
         try {
-            const { data, error } = await supabase
+            const { data, error } = await db
                 .from('guestbook')
                 .select('*')
                 .order('created_at', { ascending: false })
@@ -41,7 +41,7 @@ const Guestbook: React.FC = () => {
     useEffect(() => {
         fetchEntries();
 
-        const subscription = supabase
+        const subscription = db
             .channel('guestbook')
             .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'guestbook' }, (payload) => {
                 setEntries((prev) => [payload.new as GuestbookEntry, ...prev]);
@@ -59,7 +59,7 @@ const Guestbook: React.FC = () => {
 
         setLoading(true);
         try {
-            const { error } = await supabase
+            const { error } = await db
                 .from('guestbook')
                 .insert([{ name, message }]);
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabase';
+import { db } from '../lib/db';
 import { Users, ShoppingBag, Star, TrendingUp } from 'lucide-react';
 
 interface ProofItem {
@@ -31,7 +31,7 @@ const SocialProofBar: React.FC = () => {
     useEffect(() => {
         const fetchProofData = async () => {
             try {
-                const { data, error } = await supabase
+                const { data, error } = await db
                     .from('achievements')
                     .select('value, title, icon')
                     .eq('is_active', true)

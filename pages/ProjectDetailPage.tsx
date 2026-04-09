@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, ExternalLink, Calendar, Tag, Layers } from 'lucide-react';
-import { supabase } from '../lib/supabase';
+import { db } from '../lib/db';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
@@ -29,7 +29,7 @@ const ProjectDetailPage: React.FC = () => {
             if (!id) return;
 
             try {
-                const { data, error } = await supabase
+                const { data, error } = await db
                     .from('projects')
                     .select('*')
                     .eq('id', id)

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../../lib/supabase';
+import { db } from '../../lib/db';
 import { Plus, Trash2, Save, RefreshCw, Loader2, Trophy, ExternalLink, GripVertical } from 'lucide-react';
 import { useToast } from '../ui/Toast';
 
@@ -45,7 +45,7 @@ const AdminAchievements: React.FC = () => {
     const fetchAchievements = async () => {
         setLoading(true);
         try {
-            const { data, error } = await supabase
+            const { data, error } = await db
                 .from('achievements')
                 .select('*')
                 .order('order_index', { ascending: true });
@@ -92,7 +92,7 @@ const AdminAchievements: React.FC = () => {
         }
 
         try {
-            const { error } = await supabase.from('achievements').delete().eq('id', id);
+            const { error } = await db.from('achievements').delete().eq('id', id);
             if (error) throw error;
             setAchievements(prev => prev.filter(a => a.id !== id));
             showToast('Achievement dihapus', 'success');
@@ -108,10 +108,10 @@ const AdminAchievements: React.FC = () => {
                 const { id, ...data } = achievement;
 
                 if (id.startsWith('new-')) {
-                    const { error } = await supabase.from('achievements').insert(data);
+                    const { error } = await db.from('achievements').insert(data);
                     if (error) throw error;
                 } else {
-                    const { error } = await supabase
+                    const { error } = await db
                         .from('achievements')
                         .update({ ...data, updated_at: new Date().toISOString() })
                         .eq('id', id);

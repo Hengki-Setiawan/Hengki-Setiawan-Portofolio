@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../../lib/supabase';
+import { db } from '../../lib/db';
 import { Save, RefreshCw, Plus, Trash2, GripVertical, TrendingUp, PenTool, Code2, Layout, Share2, Zap } from 'lucide-react';
 import { useToast } from '../ui/Toast';
 
@@ -30,7 +30,7 @@ const AdminSkills: React.FC = () => {
     const fetchSkills = async () => {
         setLoading(true);
         try {
-            const { data, error } = await supabase
+            const { data, error } = await db
                 .from('skills')
                 .select('*')
                 .order('order_index', { ascending: true });
@@ -65,7 +65,7 @@ const AdminSkills: React.FC = () => {
 
         if (!id.startsWith('temp-')) {
             try {
-                const { error } = await supabase.from('skills').delete().eq('id', id);
+                const { error } = await db.from('skills').delete().eq('id', id);
                 if (error) throw error;
             } catch (err: any) {
                 showToast(err.message, 'error');
@@ -115,10 +115,10 @@ const AdminSkills: React.FC = () => {
             for (const skill of skills) {
                 const { id, ...data } = skill;
                 if (id.startsWith('temp-')) {
-                    const { error } = await supabase.from('skills').insert([data]);
+                    const { error } = await db.from('skills').insert([data]);
                     if (error) throw error;
                 } else {
-                    const { error } = await supabase.from('skills').update(data).eq('id', id);
+                    const { error } = await db.from('skills').update(data).eq('id', id);
                     if (error) throw error;
                 }
             }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabase';
+import { db } from '../lib/db';
 import { useParams, Link } from 'react-router-dom';
 import { Calendar, Eye, ArrowLeft, Loader2, Share2 } from 'lucide-react';
 import Reveal from './Reveal';
@@ -24,7 +24,7 @@ const ArticleDetail: React.FC = () => {
     useEffect(() => {
         const fetchArticle = async () => {
             try {
-                const { data, error } = await supabase
+                const { data, error } = await db
                     .from('articles')
                     .select('*')
                     .eq('slug', slug)
@@ -35,7 +35,7 @@ const ArticleDetail: React.FC = () => {
 
                 // Increment views
                 if (data) {
-                    await supabase.rpc('increment_article_views', { article_id: data.id });
+                    await db.rpc('increment_article_views', { article_id: data.id });
                 }
             } catch (error) {
                 console.error('Error fetching article:', error);

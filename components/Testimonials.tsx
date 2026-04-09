@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Quote, Star } from 'lucide-react';
 import Reveal from './Reveal';
-import { supabase } from '../lib/supabase';
+import { db } from '../lib/db';
 
 interface Testimonial {
   id: number;
@@ -19,7 +19,7 @@ const Testimonials: React.FC = () => {
   useEffect(() => {
     const fetchTestimonials = async () => {
       try {
-        const { data, error } = await supabase
+        const { data, error } = await db
           .from('testimonials')
           .select('*')
           .order('id', { ascending: true });

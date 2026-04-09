@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabase';
+import { db } from '../lib/db';
 import { ExternalLink, Github, ArrowRight, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -11,17 +11,47 @@ const FeaturedProjects: React.FC = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const activeProjects = staticProjects.filter(p => p.is_active);
-        let featured = activeProjects.filter(p => p.featured);
-        
-        if (featured.length === 0) {
-            featured = activeProjects.slice(0, 4);
-        } else {
-            featured = featured.slice(0, 4);
-        }
-        
-        setProjects(featured);
-        setLoading(false);
+        const fetchProjects = async () => {
+            try {
+                const { data, error } = await db
+                    .from('projects')
+                    .select('*')
+                    .eq('is_active', true)
+                    .order('order_index', { ascending: true });
+
+                if (error) throw error;
+                
+                if (data && data.length > 0) {
+                    const formatted = data.map((p: any) => ({
+                        id: p.id,
+                        title: p.title,
+                        description: p.description,
+                        thumbnail_url: p.image_url,
+                        url: p.link,
+                        github_url: p.github_link,
+                        technologies: typeof p.tags === 'string' ? JSON.parse(p.tags) : (p.tags || []),
+                        status: 'live',
+                        featured: !!p.is_featured,
+                        category: p.category,
+                        is_active: true
+                    } as any));
+                    
+                    const featured = formatted.filter((p: any) => p.featured).slice(0, 4);
+                    setProjects(featured.length > 0 ? featured : formatted.slice(0, 4));
+                } else {
+                    // Fallback to static if DB is empty (though we just seeded it)
+                    const activeProjects = staticProjects.filter(p => p.is_active);
+                    let featured = activeProjects.filter(p => p.featured);
+                    setProjects(featured.length > 0 ? featured.slice(0, 4) : activeProjects.slice(0, 4));
+                }
+            } catch (err) {
+                console.error("Error fetching projects:", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProjects();
     }, []);
 
     if (loading) {
@@ -129,9 +159,9 @@ const FeaturedProjects: React.FC = () => {
                                 </div>
 
                                 {/* Tech Stack Badges */}
-                                {project.technologies && project.technologies.length > 0 && (
+                                {(project as any).technologies && (project as any).technologies.length > 0 && (
                                     <div className="flex flex-wrap gap-2 mt-4">
-                                        {project.technologies.slice(0, 5).map((tech, i) => (
+                                        {(project as any).technologies.slice(0, 5).map((tech: string, i: number) => (
                                             <span
                                                 key={i}
                                                 className="px-2.5 py-1 rounded-lg text-xs font-medium bg-primary/5 text-primary border border-primary/10"

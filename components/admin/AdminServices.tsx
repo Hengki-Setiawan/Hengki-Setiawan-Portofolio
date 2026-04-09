@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../../lib/supabase';
+import { db } from '../../lib/db';
 import { Save, RefreshCw, Plus, Trash2, Edit2, X, Briefcase } from 'lucide-react';
 
 interface Service {
@@ -26,7 +26,7 @@ const AdminServices: React.FC = () => {
     const fetchServices = async () => {
         setLoading(true);
         try {
-            const { data, error } = await supabase
+            const { data, error } = await db
                 .from('services')
                 .select('*')
                 .order('order_index', { ascending: true });
@@ -51,14 +51,14 @@ const AdminServices: React.FC = () => {
 
         try {
             if (editingService) {
-                const { error } = await supabase
+                const { error } = await db
                     .from('services')
                     .update({ ...formData })
                     .eq('id', editingService.id);
                 if (error) throw error;
                 setSuccess('Layanan berhasil diupdate!');
             } else {
-                const { error } = await supabase
+                const { error } = await db
                     .from('services')
                     .insert([{ ...formData, order_index: services.length }]);
                 if (error) throw error;
@@ -77,7 +77,7 @@ const AdminServices: React.FC = () => {
         if (!confirm('Yakin ingin menghapus layanan ini?')) return;
 
         try {
-            const { error } = await supabase.from('services').delete().eq('id', id);
+            const { error } = await db.from('services').delete().eq('id', id);
             if (error) throw error;
             setServices(services.filter(s => s.id !== id));
             setSuccess('Layanan dihapus!');

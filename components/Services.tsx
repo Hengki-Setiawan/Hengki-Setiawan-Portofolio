@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Monitor, Users, PenTool, ArrowRight, Code, ShoppingBag, TrendingUp, Briefcase, Globe, Palette, MessageCircle, Loader2 } from 'lucide-react';
 import Reveal from './Reveal';
-import { supabase } from '../lib/supabase';
+import { db } from '../lib/db';
 import { useTranslation } from 'react-i18next';
 import TranslatedText from './TranslatedText';
 
@@ -39,7 +39,7 @@ const Services: React.FC = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const { data, error } = await supabase
+        const { data, error } = await db
           .from('services')
           .select('*')
           .eq('is_active', true)

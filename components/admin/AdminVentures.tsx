@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../../lib/supabase';
+import { db } from '../../lib/db';
 import { Plus, Trash2, Save, RefreshCw, Loader2, Rocket, GripVertical } from 'lucide-react';
 import { useToast } from '../ui/Toast';
 
@@ -31,7 +31,7 @@ const AdminVentures: React.FC = () => {
     const fetchVentures = async () => {
         setLoading(true);
         try {
-            const { data, error } = await supabase
+            const { data, error } = await db
                 .from('ventures')
                 .select('*')
                 .order('order_index', { ascending: true });
@@ -79,7 +79,7 @@ const AdminVentures: React.FC = () => {
         if (!confirm('Are you sure you want to delete this venture?')) return;
 
         try {
-            const { error } = await supabase.from('ventures').delete().eq('id', id);
+            const { error } = await db.from('ventures').delete().eq('id', id);
             if (error) throw error;
             setVentures(prev => prev.filter(v => v.id !== id));
             showToast('Venture deleted', 'success');
@@ -97,10 +97,10 @@ const AdminVentures: React.FC = () => {
                 const { id, ...data } = venture;
 
                 if (id.startsWith('new-')) {
-                    const { error } = await supabase.from('ventures').insert(data);
+                    const { error } = await db.from('ventures').insert(data);
                     if (error) throw error;
                 } else {
-                    const { error } = await supabase
+                    const { error } = await db
                         .from('ventures')
                         .update({ ...data, updated_at: new Date().toISOString() })
                         .eq('id', id);

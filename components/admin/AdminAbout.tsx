@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../../lib/supabase';
+import { db } from '../../lib/db';
 import { Save, RefreshCw, Image, Type, Loader2 } from 'lucide-react';
 import { useToast } from '../ui/Toast';
 import ImageUpload from '../ui/ImageUpload';
@@ -22,7 +22,7 @@ const AdminAbout: React.FC = () => {
     const fetchContent = async () => {
         setLoading(true);
         try {
-            const { data, error } = await supabase
+            const { data, error } = await db
                 .from('site_content')
                 .select('*')
                 .eq('section', 'about')
@@ -62,7 +62,7 @@ const AdminAbout: React.FC = () => {
             // Process regular content
             const regularKeys = Object.keys(content).filter(k => !k.includes('image_'));
             for (const key of regularKeys) {
-                const { error } = await supabase
+                const { error } = await db
                     .from('site_content')
                     .upsert({
                         section: 'about',
@@ -82,7 +82,7 @@ const AdminAbout: React.FC = () => {
                 const url = content[`${imgKey}_url`] || '';
 
                 if (caption || url) {
-                    const { error } = await supabase
+                    const { error } = await db
                         .from('site_content')
                         .upsert({
                             section: 'about',

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { supabase } from '../../lib/supabase';
+import { db } from '../../lib/db';
 import { Trash2, Loader2, Sparkles, CheckCircle, Mail, AlertTriangle, Briefcase } from 'lucide-react';
 import { useToast } from '../ui/Toast';
 
@@ -37,7 +37,7 @@ const AdminMessages: React.FC = () => {
 
     const fetchMessages = async () => {
         try {
-            const { data, error } = await supabase
+            const { data, error } = await db
                 .from('messages')
                 .select('*')
                 .order('created_at', { ascending: false });
@@ -55,7 +55,7 @@ const AdminMessages: React.FC = () => {
         if (!confirm('Are you sure you want to delete this message?')) return;
 
         try {
-            const { error } = await supabase
+            const { error } = await db
                 .from('messages')
                 .delete()
                 .eq('id', id);

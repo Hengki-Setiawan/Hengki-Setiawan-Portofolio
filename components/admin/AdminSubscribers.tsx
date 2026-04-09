@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { supabase } from '../../lib/supabase';
+import { db } from '../../lib/db';
 import { Loader2 } from 'lucide-react';
 
 interface Subscriber {
@@ -19,7 +19,7 @@ const AdminSubscribers: React.FC = () => {
 
     const fetchSubscribers = async () => {
         try {
-            const { data, error } = await supabase
+            const { data, error } = await db
                 .from('subscribers')
                 .select('*')
                 .order('created_at', { ascending: false });
@@ -54,7 +54,7 @@ const AdminSubscribers: React.FC = () => {
 
         try {
             setLoading(true);
-            const { error } = await supabase
+            const { error } = await db
                 .from('subscribers')
                 .delete()
                 .in('id', selectedIds);

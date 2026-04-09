@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabase';
+import { db } from '../lib/db';
 import { Loader2, Calendar } from 'lucide-react';
 import Reveal from './Reveal';
 
@@ -35,7 +35,7 @@ const Milestones: React.FC = () => {
     useEffect(() => {
         const fetchMilestones = async () => {
             try {
-                const { data, error } = await supabase
+                const { data, error } = await db
                     .from('milestones')
                     .select('*')
                     .eq('is_active', true)

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Layout, Share2, TrendingUp, Code2, Zap, PenTool, Loader2 } from 'lucide-react';
 import Reveal from './Reveal';
-import { supabase } from '../lib/supabase';
+import { db } from '../lib/db';
 import { useTranslation } from 'react-i18next';
 import TranslatedText from './TranslatedText';
 
@@ -54,14 +54,21 @@ const Skills: React.FC = () => {
   useEffect(() => {
     const fetchSkills = async () => {
       try {
-        const { data, error } = await supabase
+        const { data, error } = await db
           .from('skills')
           .select('*')
           .eq('is_active', true)
           .order('order_index', { ascending: true });
 
         if (error) throw error;
-        setSkills(data || []);
+        
+        if (data && data.length > 0) {
+          const formattedData = data.map((s: any) => ({
+            ...s,
+            items: typeof s.items === 'string' ? JSON.parse(s.items) : (s.items || [])
+          }));
+          setSkills(formattedData);
+        }
       } catch (error) {
         console.error('Error fetching skills:', error);
       } finally {

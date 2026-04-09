@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Shirt, MessageCircle, ArrowUpRight, Loader2, CheckCircle2 } from 'lucide-react';
 import Reveal from './Reveal';
-import { supabase } from '../lib/supabase';
+import { db } from '../lib/db';
 
 interface VentureItem {
   id: string;
@@ -28,14 +28,20 @@ const Ventures: React.FC = () => {
   useEffect(() => {
     const fetchVentures = async () => {
       try {
-        const { data, error } = await supabase
+        const { data, error } = await db
           .from('ventures')
           .select('*')
           .eq('is_active', true)
           .order('order_index', { ascending: true });
 
         if (error) throw error;
-        setVentures(data || []);
+        if (data && data.length > 0) {
+          const formatted = data.map((v: any) => ({
+            ...v,
+            features: typeof v.features === 'string' ? JSON.parse(v.features) : (v.features || [])
+          }));
+          setVentures(formatted);
+        }
       } catch (error) {
         console.error('Error fetching ventures:', error);
       } finally {

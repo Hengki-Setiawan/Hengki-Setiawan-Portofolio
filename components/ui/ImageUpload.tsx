@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { supabase } from '../../lib/supabase';
+import { db } from '../../lib/db';
 import { Upload, X, Loader2, Image as ImageIcon } from 'lucide-react';
 
 interface ImageUploadProps {
@@ -47,7 +47,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
             const fileName = `${folder}/${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
 
             // Upload to Supabase Storage
-            const { data, error: uploadError } = await supabase.storage
+            const { data, error: uploadError } = await db.storage
                 .from(bucket)
                 .upload(fileName, file, {
                     cacheControl: '3600',
@@ -57,7 +57,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
             if (uploadError) throw uploadError;
 
             // Get public URL
-            const { data: urlData } = supabase.storage
+            const { data: urlData } = db.storage
                 .from(bucket)
                 .getPublicUrl(fileName);
 

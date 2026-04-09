@@ -15,7 +15,7 @@ import {
     Eye
 } from 'lucide-react';
 import Reveal from './Reveal';
-import { supabase } from '../lib/supabase';
+import { db } from '../lib/db';
 import { useTranslation } from 'react-i18next';
 
 // Default stats values (used as fallback)
@@ -38,7 +38,7 @@ const useSocialStats = () => {
     useEffect(() => {
         const fetchStats = async () => {
             try {
-                const { data, error } = await supabase
+                const { data, error } = await db
                     .from('social_stats')
                     .select('key, value');
 

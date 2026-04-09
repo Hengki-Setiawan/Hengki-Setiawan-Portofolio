@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { supabase } from '../lib/supabase';
+import { db } from '../lib/db';
 import { Mail, Phone, MapPin, Globe, Printer, Download, ExternalLink, Linkedin, Github, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import html2canvas from 'html2canvas';
@@ -51,13 +51,13 @@ const CVPage: React.FC = () => {
         const fetchData = async () => {
             try {
                 // 1. Fetch Manual CV Entries
-                const { data: entriesData } = await supabase
+                const { data: entriesData } = await db
                     .from('cv_entries')
                     .select('*')
                     .order('order_index', { ascending: true });
 
                 // 2. Fetch Website Experiences (Sync with "Perjalanan" section)
-                const { data: websiteExpData } = await supabase
+                const { data: websiteExpData } = await db
                     .from('experiences')
                     .select('*')
                     .eq('is_active', true)
@@ -81,22 +81,28 @@ const CVPage: React.FC = () => {
                 setEntries([...otherEntries, ...allExperiences]);
 
                 // 3. Fetch CV Profile
-                const { data: profileData } = await supabase
+                const { data: profileData } = await db
                     .from('cv_profile')
                     .select('*')
                     .single();
                 setProfile(profileData);
 
                 // 4. Fetch Skills
-                const { data: skillsData } = await supabase
+                const { data: skillsData } = await db
                     .from('skills')
                     .select('*')
                     .eq('is_active', true)
                     .order('order_index', { ascending: true });
-                setSkills(skillsData || []);
+                if (skillsData && skillsData.length > 0) {
+                    const formattedSkills = skillsData.map((s: any) => ({
+                        ...s,
+                        items: typeof s.items === 'string' ? JSON.parse(s.items) : (s.items || [])
+                    }));
+                    setSkills(formattedSkills);
+                }
 
                 // 5. Fetch Hero Data
-                const { data: heroContent } = await supabase
+                const { data: heroContent } = await db
                     .from('site_content')
                     .select('*')
                     .eq('section', 'hero');

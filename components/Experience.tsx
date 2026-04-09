@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Briefcase, ShoppingBag, Users, Loader2 } from 'lucide-react';
 import Reveal from './Reveal';
-import { supabase } from '../lib/supabase';
+import { db } from '../lib/db';
 import { useTranslation } from 'react-i18next';
 import TranslatedText from './TranslatedText';
 
@@ -49,7 +49,7 @@ const Experience: React.FC = () => {
   useEffect(() => {
     const fetchExperiences = async () => {
       try {
-        const { data, error } = await supabase
+        const { data, error } = await db
           .from('experiences')
           .select('*')
           .eq('is_active', true)

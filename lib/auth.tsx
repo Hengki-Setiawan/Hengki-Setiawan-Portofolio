@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { supabase } from '../lib/supabase';
+import { db } from '../lib/db';
 
 type User = any;
 
@@ -18,7 +18,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     useEffect(() => {
         // Check active sessions
-        supabase.auth.getSession().then(({ data: { session } }) => {
+        db.auth.getSession().then(({ data: { session } }) => {
             setUser(session?.user ?? null);
             setLoading(false);
         });
@@ -26,7 +26,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         // Listen for changes
         const {
             data: { subscription },
-        } = supabase.auth.onAuthStateChange((_event, session) => {
+        } = db.auth.onAuthStateChange((_event, session) => {
             setUser(session?.user ?? null);
         });
 
@@ -34,14 +34,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }, []);
 
     const signIn = async (email: string, password: string) => {
-        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+        const { data, error } = await db.auth.signInWithPassword({ email, password });
         if (error) throw error;
         // Explicitly hydrate user state since the proxy does not emit event listeners
         if (data?.session?.user) setUser(data.session.user);
     };
 
     const signOut = async () => {
-        const { error } = await supabase.auth.signOut();
+        const { error } = await db.auth.signOut();
         if (error) throw error;
         setUser(null);
     };

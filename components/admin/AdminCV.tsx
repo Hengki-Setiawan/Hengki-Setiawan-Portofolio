@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../../lib/supabase';
+import { db } from '../../lib/db';
 import { Save, RefreshCw, Plus, Trash2, Briefcase, GraduationCap, Award, FileText, Printer } from 'lucide-react';
 import { useToast } from '../ui/Toast';
 import { Link } from 'react-router-dom';
@@ -39,7 +39,7 @@ const AdminCV: React.FC = () => {
         setLoading(true);
         try {
             // Fetch Entries
-            const { data: entriesData, error: entriesError } = await supabase
+            const { data: entriesData, error: entriesError } = await db
                 .from('cv_entries')
                 .select('*')
                 .order('order_index', { ascending: true });
@@ -48,7 +48,7 @@ const AdminCV: React.FC = () => {
             setEntries(entriesData || []);
 
             // Fetch Profile
-            const { data: profileData, error: profileError } = await supabase
+            const { data: profileData, error: profileError } = await db
                 .from('cv_profile')
                 .select('*')
                 .single();
@@ -85,7 +85,7 @@ const AdminCV: React.FC = () => {
         if (!confirm('Delete this entry?')) return;
 
         if (!id.startsWith('temp-')) {
-            const { error } = await supabase.from('cv_entries').delete().eq('id', id);
+            const { error } = await db.from('cv_entries').delete().eq('id', id);
             if (error) {
                 showToast(error.message, 'error');
                 return;
@@ -106,7 +106,7 @@ const AdminCV: React.FC = () => {
         setSaving(true);
         try {
             // Save Profile
-            const { error: profileError } = await supabase
+            const { error: profileError } = await db
                 .from('cv_profile')
                 .upsert({ ...profile, updated_at: new Date().toISOString() }); // Assuming single row logic or ID handling on backend, but for simplicity we rely on single row policy or pre-inserted row
 
@@ -122,20 +122,20 @@ const AdminCV: React.FC = () => {
             // For now, let's just assume the migration inserted a row and we are updating it.
             // We need to fetch the ID to update properly.
 
-            const { data: existingProfile } = await supabase.from('cv_profile').select('id').single();
+            const { data: existingProfile } = await db.from('cv_profile').select('id').single();
             if (existingProfile) {
-                await supabase.from('cv_profile').update({ ...profile, updated_at: new Date().toISOString() }).eq('id', existingProfile.id);
+                await db.from('cv_profile').update({ ...profile, updated_at: new Date().toISOString() }).eq('id', existingProfile.id);
             } else {
-                await supabase.from('cv_profile').insert([profile]);
+                await db.from('cv_profile').insert([profile]);
             }
 
             // Save Entries
             for (const entry of entries) {
                 const { id, ...data } = entry;
                 if (id.startsWith('temp-')) {
-                    await supabase.from('cv_entries').insert([data]);
+                    await db.from('cv_entries').insert([data]);
                 } else {
-                    await supabase.from('cv_entries').update(data).eq('id', id);
+                    await db.from('cv_entries').update(data).eq('id', id);
                 }
             }
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ExternalLink } from 'lucide-react';
 import Reveal from './Reveal';
-import { supabase } from '../lib/supabase';
+import { db } from '../lib/db';
 
 interface Project {
   id: number;
@@ -20,15 +20,23 @@ const Gallery: React.FC = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const { data, error } = await supabase
+        const { data, error } = await db
           .from('projects')
           .select('*')
           .order('id', { ascending: true });
 
         if (error) {
           console.error('Error fetching projects:', error);
-        } else {
-          setProjects(data || []);
+        } else if (data && data.length > 0) {
+          const formatted = data.map((p: any) => ({
+            id: p.id,
+            category: p.category,
+            title: p.title,
+            image: p.image_url,
+            description: p.description,
+            link: p.link
+          }));
+          setProjects(formatted);
         }
       } catch (err) {
         console.error('Unexpected error:', err);

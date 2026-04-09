@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../../lib/supabase';
+import { db } from '../../lib/db';
 import { Plus, Trash2, Save, RefreshCw, Loader2, Globe, Upload, GripVertical, Star, DownloadCloud } from 'lucide-react';
 import { useToast } from '../ui/Toast';
 
@@ -42,7 +42,7 @@ const AdminWebsites: React.FC = () => {
     const fetchWebsites = async () => {
         setLoading(true);
         try {
-            const { data, error } = await supabase
+            const { data, error } = await db
                 .from('websites')
                 .select('*')
                 .order('order_index', { ascending: true });
@@ -78,13 +78,13 @@ const AdminWebsites: React.FC = () => {
             const fileName = `website_${Date.now()}.${fileExt}`;
             const filePath = `websites/${fileName}`;
 
-            const { error: uploadError } = await supabase.storage
+            const { error: uploadError } = await db.storage
                 .from('images')
                 .upload(filePath, file);
 
             if (uploadError) throw uploadError;
 
-            const { data: { publicUrl } } = supabase.storage
+            const { data: { publicUrl } } = db.storage
                 .from('images')
                 .getPublicUrl(filePath);
 
@@ -121,7 +121,7 @@ const AdminWebsites: React.FC = () => {
         }
 
         try {
-            const { error } = await supabase.from('websites').delete().eq('id', id);
+            const { error } = await db.from('websites').delete().eq('id', id);
             if (error) throw error;
             setWebsites(prev => prev.filter(w => w.id !== id));
             showToast('Website dihapus', 'success');
@@ -139,10 +139,10 @@ const AdminWebsites: React.FC = () => {
                 const { id, ...data } = website;
 
                 if (id.startsWith('new-')) {
-                    const { error } = await supabase.from('websites').insert(data);
+                    const { error } = await db.from('websites').insert(data);
                     if (error) throw error;
                 } else {
-                    const { error } = await supabase
+                    const { error } = await db
                         .from('websites')
                         .update({ ...data, updated_at: new Date().toISOString() })
                         .eq('id', id);
@@ -285,7 +285,7 @@ const AdminWebsites: React.FC = () => {
                 }
             ];
 
-            const { error } = await supabase.from('websites').upsert(targetProjects, { onConflict: 'url' });
+            const { error } = await db.from('websites').upsert(targetProjects, { onConflict: 'url' });
             if (error) throw error;
             
             showToast('10 Proyek Website Import Berhasil!', 'success');
