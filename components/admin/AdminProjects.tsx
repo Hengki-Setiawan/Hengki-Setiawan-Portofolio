@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import { Trash2, Edit2, Plus, Loader2, X } from 'lucide-react';
+import { useToast } from '../ui/Toast';
 
 interface Project {
     id: number;
@@ -16,6 +17,9 @@ const AdminProjects: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [showForm, setShowForm] = useState(false);
     const [editingProject, setEditingProject] = useState<Project | null>(null);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [categoryFilter, setCategoryFilter] = useState('');
+    const { addToast } = useToast();
     const [formData, setFormData] = useState({
         category: '',
         title: '',
@@ -68,9 +72,10 @@ const AdminProjects: React.FC = () => {
 
             await fetchProjects();
             resetForm();
+            addToast('Project saved successfully', 'success');
         } catch (error) {
             console.error('Error saving project:', error);
-            alert('Failed to save project');
+            addToast('Failed to save project', 'error');
         } finally {
             setLoading(false);
         }
@@ -99,9 +104,10 @@ const AdminProjects: React.FC = () => {
 
             if (error) throw error;
             setProjects(projects.filter(p => p.id !== id));
+            addToast('Project deleted', 'success');
         } catch (error) {
             console.error('Error deleting project:', error);
-            alert('Failed to delete project');
+            addToast('Failed to delete project', 'error');
         }
     };
 
@@ -119,9 +125,17 @@ const AdminProjects: React.FC = () => {
         );
     }
 
+    const categories = Array.from(new Set(projects.map(p => p.category)));
+    
+    const filteredProjects = projects.filter(p => {
+        const matchesSearch = p.title.toLowerCase().includes(searchTerm.toLowerCase()) || p.description.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesCategory = categoryFilter === '' || p.category === categoryFilter;
+        return matchesSearch && matchesCategory;
+    });
+
     return (
         <div>
-            <div className="flex justify-between items-center mb-6">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
                 <h1 className="text-3xl font-bold text-slate-900">Projects Management</h1>
                 <button
                     onClick={() => setShowForm(true)}
@@ -131,6 +145,26 @@ const AdminProjects: React.FC = () => {
                     Add Project
                 </button>
             </div>
+
+            {!showForm && (
+                <div className="flex flex-col sm:flex-row gap-4 mb-6">
+                    <input 
+                        type="text" 
+                        placeholder="Search projects by title or description..." 
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="px-4 py-2 border border-slate-200 rounded-lg flex-1 focus:ring-2 focus:ring-primary focus:border-transparent outline-none shadow-sm"
+                    />
+                    <select 
+                        value={categoryFilter}
+                        onChange={(e) => setCategoryFilter(e.target.value)}
+                        className="px-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-primary outline-none bg-white shadow-sm"
+                    >
+                        <option value="">All Categories</option>
+                        {categories.map(c => <option key={c} value={c}>{c}</option>)}
+                    </select>
+                </div>
+            )}
 
             {/* Form Modal */}
             {showForm && (
@@ -227,8 +261,13 @@ const AdminProjects: React.FC = () => {
             )}
 
             {/* Projects List */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {projects.map((project) => (
+            {filteredProjects.length === 0 ? (
+                <div className="text-center py-12 text-slate-500 bg-white rounded-lg border border-slate-200">
+                    No projects found matching the filters.
+                </div>
+            ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {filteredProjects.map((project) => (
                     <div key={project.id} className="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
                         <img src={project.image} alt={project.title} className="w-full h-48 object-cover" />
                         <div className="p-4">
@@ -260,6 +299,7 @@ const AdminProjects: React.FC = () => {
                     </div>
                 ))}
             </div>
+            )}
         </div>
     );
 };

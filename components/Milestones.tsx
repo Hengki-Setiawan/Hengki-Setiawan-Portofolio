@@ -78,7 +78,7 @@ const Milestones: React.FC = () => {
                             <Calendar className="w-4 h-4" />
                             Timeline
                         </div>
-                        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                        <h2 className="text-3xl md:text-4xl font-bold text-textMain mb-4">
                             Perjalanan <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-accent">Menuju Kesuksesan</span>
                         </h2>
                     </div>
@@ -105,12 +105,12 @@ const Milestones: React.FC = () => {
                                                     <div>
                                                         <span className="text-primary font-mono text-sm font-bold">{milestone.year}</span>
                                                         {milestone.month && (
-                                                            <span className="text-slate-400 text-sm ml-1">• {milestone.month}</span>
+                                                            <span className="text-textMuted text-sm ml-1">• {milestone.month}</span>
                                                         )}
                                                     </div>
                                                 </div>
-                                                <h3 className="text-xl font-bold text-white mb-2">{milestone.title}</h3>
-                                                <p className="text-slate-400 text-sm leading-relaxed">{milestone.description}</p>
+                                                <h3 className="text-xl font-bold text-textMain mb-2">{milestone.title}</h3>
+                                                <p className="text-textMuted text-sm leading-relaxed">{milestone.description}</p>
                                             </div>
                                         </div>
 

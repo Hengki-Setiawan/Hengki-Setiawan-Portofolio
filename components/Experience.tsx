@@ -6,9 +6,30 @@ import { useTranslation } from 'react-i18next';
 import TranslatedText from './TranslatedText';
 
 const defaultExperiences = [
-  { id: '1', title: 'Kaos Kami', role: 'Owner & Founder', period: 'Sekarang', description: 'Membangun brand clothing dari nol.', order_index: 0 },
-  { id: '2', title: 'Komunitas "Kami Depresi dan Bahagia"', role: 'Lead Admin & Owner', period: 'Sekarang', description: 'Moderasi konten dan manajemen komunitas online.', order_index: 1 },
-  { id: '3', title: 'PT Midi Utama Indonesia Tbk (Alfamidi)', role: 'Staff Operasional', period: '± 1 Tahun', description: 'Pengalaman profesional pertama dalam lingkungan ritel.', order_index: 2 },
+  { 
+    id: '1', 
+    title: 'Kaos Kami', 
+    role: 'Pemilik Toko Online & Brand', 
+    period: 'Jun 2022 - Sekarang', 
+    description: 'Mengelola operasional end-to-end brand pakaian melalui Shopee, Tokopedia, Facebook, dan TikTok. Mempertahankan kepuasan pelanggan 4,9/5,0.', 
+    order_index: 0 
+  },
+  { 
+    id: '2', 
+    title: 'Komunitas Facebook', 
+    role: 'Lead Admin & Manajer', 
+    period: 'Nov 2021 - Sekarang', 
+    description: 'Membangun dan mengelola jaringan komunitas Facebook dari nol hingga >500.000 anggota (Kami Depresi, Kami Bahagia).', 
+    order_index: 1 
+  },
+  { 
+    id: '3', 
+    title: 'PT Midi Utama Indonesia Tbk (Alfamidi)', 
+    role: 'Staff Operasional', 
+    period: 'Sep 2021 - Agu 2022', 
+    description: 'Memproses transaksi harian secara akurat serta mengelola planogram produk dan menjaga kebersihan toko.', 
+    order_index: 2 
+  },
 ];
 
 interface ExperienceData {

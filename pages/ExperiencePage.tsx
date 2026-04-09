@@ -6,12 +6,10 @@ import Footer from '../components/Footer';
 import BackToTop from '../components/ui/BackToTop';
 import SEO from '../components/SEO';
 import PageTransition from '../components/PageTransition';
-import CustomCursor from '../components/ui/CustomCursor';
 
 const ExperiencePage: React.FC = () => {
     return (
         <PageTransition>
-            <CustomCursor />
             <SEO
                 title="Perjalanan"
                 description="Pengalaman profesional, pencapaian, dan informasi kontak Hengki Setiawan."

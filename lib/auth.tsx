@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
-import { User } from '@supabase/supabase-js';
+
+type User = any;
 
 interface AuthContextType {
     user: User | null;
@@ -33,13 +34,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }, []);
 
     const signIn = async (email: string, password: string) => {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
+        // Explicitly hydrate user state since the proxy does not emit event listeners
+        if (data?.session?.user) setUser(data.session.user);
     };
 
     const signOut = async () => {
         const { error } = await supabase.auth.signOut();
         if (error) throw error;
+        setUser(null);
     };
 
     return (

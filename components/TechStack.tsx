@@ -1,29 +1,32 @@
 import React from 'react';
 
-const brands = [
-  { name: 'Kaos Kami', color: 'text-orange-500' },
-  { name: 'Kami Depresi', color: 'text-blue-500' },
-  { name: 'Shopee Store', color: 'text-orange-600' },
-  { name: 'Tokopedia Store', color: 'text-green-500' },
-  { name: 'Digital Creator', color: 'text-pink-500' },
-  { name: 'Community Builder', color: 'text-cyan-400' },
-  { name: 'E-commerce', color: 'text-red-500' },
+const technologies = [
+  { name: 'TypeScript', color: 'text-blue-600' },
+  { name: 'JavaScript', color: 'text-yellow-600' },
+  { name: 'React', color: 'text-cyan-600' },
+  { name: 'Tailwind CSS', color: 'text-cyan-500' },
+  { name: 'Supabase', color: 'text-emerald-600' },
+  { name: 'PostgreSQL', color: 'text-blue-700' },
+  { name: 'Vite', color: 'text-purple-600' },
+  { name: 'Vercel', color: 'text-slate-800' },
+  { name: 'GitHub', color: 'text-slate-700' },
+  { name: 'Framer Motion', color: 'text-pink-600' },
+  { name: 'Prompt Engineering', color: 'text-orange-600' },
+  { name: 'Telegram Bot API', color: 'text-blue-500' },
 ];
 
 const TechStack: React.FC = () => {
   return (
-    <div className="w-full bg-slate-900 py-10 overflow-hidden relative">
-      <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-slate-900 to-transparent z-10"></div>
-      <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-slate-900 to-transparent z-10"></div>
+    <div className="w-full bg-darker py-8 border-y border-slate-200 overflow-hidden relative">
+      <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-darker to-transparent z-10 pointer-events-none"></div>
+      <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-darker to-transparent z-10 pointer-events-none"></div>
 
       <div className="flex whitespace-nowrap animate-scroll">
-        {/* Duplicate list 3 times to ensure smooth infinite loop */}
-        {[...brands, ...brands, ...brands].map((brand, index) => (
+        {[...technologies, ...technologies, ...technologies].map((tech, index) => (
           <div key={index} className="mx-8 flex items-center gap-2">
-            <span className={`text-xl md:text-2xl font-bold ${brand.color} opacity-80 hover:opacity-100 transition-opacity`}>
-              {brand.name}
+            <span className={`text-lg font-bold ${tech.color} opacity-80 hover:opacity-100 transition-opacity cursor-default`}>
+              {tech.name}
             </span>
-            <span className="text-slate-700 mx-2">•</span>
           </div>
         ))}
       </div>
@@ -34,7 +37,7 @@ const TechStack: React.FC = () => {
           100% { transform: translateX(-33.33%); }
         }
         .animate-scroll {
-          animation: scroll 20s linear infinite;
+          animation: scroll 35s linear infinite;
         }
       `}</style>
     </div>

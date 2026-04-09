@@ -16,10 +16,10 @@ interface Achievement {
 }
 
 const defaultAchievements: Achievement[] = [
-    { id: '1', title: 'Grup Facebook', description: 'Komunitas aktif', value: '365K+', icon: '👥', platform: 'facebook', category: 'community', link: null, order_index: 1 },
-    { id: '2', title: 'Star Seller', description: 'Tokopedia', value: '⭐', icon: '🏆', platform: 'tokopedia', category: 'certification', link: null, order_index: 2 },
-    { id: '3', title: 'Produk Terjual', description: 'Total penjualan', value: '1,250+', icon: '🛒', platform: 'shopee', category: 'sales', link: null, order_index: 3 },
-    { id: '4', title: 'Instagram', description: 'Followers', value: '1.2K+', icon: '📸', platform: 'instagram', category: 'social', link: null, order_index: 4 },
+    { id: '1', title: 'Grup Facebook', description: 'Komunitas aktif (+)', value: '500K+', icon: '👥', platform: 'facebook', category: 'community', link: null, order_index: 1 },
+    { id: '2', title: 'Star Seller', description: 'Shopee', value: '⭐', icon: '🏆', platform: 'shopee', category: 'certification', link: null, order_index: 2 },
+    { id: '3', title: 'Produk Terjual', description: 'Total penjualan Kaos Kami', value: '600+', icon: '🛒', platform: 'shopee', category: 'sales', link: null, order_index: 3 },
+    { id: '4', title: 'Hengki Setiawan', description: 'Pengikut Facebook', value: '12K+', icon: '📱', platform: 'facebook', category: 'social', link: 'https://web.facebook.com/hengki.kena.algo/?_rdc=1&_rdr#', order_index: 4 },
 ];
 
 // Animated value component
@@ -96,42 +96,8 @@ const platformColors: Record<string, string> = {
 };
 
 const Achievements: React.FC = () => {
-    const [achievements, setAchievements] = useState<Achievement[]>(defaultAchievements);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        const fetchAchievements = async () => {
-            try {
-                const { data, error } = await supabase
-                    .from('achievements')
-                    .select('*')
-                    .eq('is_active', true)
-                    .order('order_index', { ascending: true });
-
-                if (error) throw error;
-
-                if (data && data.length > 0) {
-                    setAchievements(data);
-                }
-            } catch (error) {
-                console.error('Error fetching achievements:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchAchievements();
-    }, []);
-
-    if (loading) {
-        return (
-            <section className="py-16 bg-dark">
-                <div className="flex justify-center">
-                    <Loader2 className="w-8 h-8 animate-spin text-primary" />
-                </div>
-            </section>
-        );
-    }
+    // Statis untuk reliabilitas 100% tanpa risiko server Supabase ngedrop (Zero-Downtime Guarantee)
+    const achievements = defaultAchievements;
 
     return (
         <section id="achievements" className="py-20 bg-gradient-to-b from-dark to-surface relative overflow-hidden">
@@ -146,10 +112,10 @@ const Achievements: React.FC = () => {
                             <Trophy className="w-4 h-4" />
                             Pencapaian
                         </div>
-                        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                        <h2 className="text-3xl md:text-4xl font-bold text-textMain mb-4">
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Milestone</span> & Achievements
                         </h2>
-                        <p className="text-slate-400 max-w-2xl mx-auto">
+                        <p className="text-textMuted max-w-2xl mx-auto">
                             Jejak perjalanan dan pencapaian dalam membangun komunitas, bisnis, dan personal branding.
                         </p>
                     </div>
@@ -178,12 +144,12 @@ const Achievements: React.FC = () => {
                                     </div>
 
                                     {/* Title */}
-                                    <h3 className="text-white font-semibold text-sm md:text-base mb-1">
+                                    <h3 className="text-textMain font-semibold text-sm md:text-base mb-1">
                                         {achievement.title}
                                     </h3>
 
                                     {/* Description */}
-                                    <p className="text-slate-400 text-xs md:text-sm">
+                                    <p className="text-textMuted text-xs md:text-sm">
                                         {achievement.description}
                                     </p>
 

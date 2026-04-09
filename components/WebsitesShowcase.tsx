@@ -3,17 +3,7 @@ import { supabase } from '../lib/supabase';
 import { ExternalLink, Loader2, Globe, Star } from 'lucide-react';
 import Reveal from './Reveal';
 
-interface Website {
-    id: string;
-    title: string;
-    description: string;
-    url: string;
-    thumbnail_url: string | null;
-    category: string;
-    technologies: string[];
-    status: string;
-    featured: boolean;
-}
+import { staticProjects, Website } from '../lib/projects';
 
 const categoryColors: Record<string, string> = {
     ecommerce: 'from-orange-500 to-red-500',
@@ -35,24 +25,9 @@ const WebsitesShowcase: React.FC = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchWebsites = async () => {
-            try {
-                const { data, error } = await supabase
-                    .from('websites')
-                    .select('*')
-                    .eq('is_active', true)
-                    .order('order_index', { ascending: true });
-
-                if (error) throw error;
-                setWebsites(data || []);
-            } catch (error) {
-                console.error('Error fetching websites:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchWebsites();
+        // Simulasi network delay minimal atau bisa langsung di set
+        setWebsites(staticProjects.filter(p => p.is_active));
+        setLoading(false);
     }, []);
 
     if (loading) {
@@ -81,10 +56,10 @@ const WebsitesShowcase: React.FC = () => {
                             <Globe className="w-4 h-4" />
                             Website Saya
                         </div>
-                        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                        <h2 className="text-3xl md:text-4xl font-bold text-textMain mb-4">
                             Website yang Pernah <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Saya Buat</span>
                         </h2>
-                        <p className="text-slate-400 max-w-2xl mx-auto">
+                        <p className="text-textMuted max-w-2xl mx-auto">
                             Kumpulan website dan project yang telah saya kembangkan untuk berbagai kebutuhan bisnis.
                         </p>
                     </div>
@@ -137,8 +112,8 @@ const WebsitesShowcase: React.FC = () => {
 
                                     {/* Content */}
                                     <div className="p-5">
-                                        <h3 className="text-lg font-bold text-white mb-2">{website.title}</h3>
-                                        <p className="text-slate-400 text-sm mb-4 line-clamp-2">{website.description}</p>
+                                        <h3 className="text-lg font-bold text-textMain mb-2">{website.title}</h3>
+                                        <p className="text-textMuted text-sm mb-4 line-clamp-2">{website.description}</p>
 
                                         {/* Technologies */}
                                         {website.technologies && website.technologies.length > 0 && (
@@ -146,13 +121,13 @@ const WebsitesShowcase: React.FC = () => {
                                                 {website.technologies.slice(0, 3).map((tech, idx) => (
                                                     <span
                                                         key={idx}
-                                                        className="px-2 py-1 rounded-md bg-white/5 text-slate-400 text-xs"
+                                                        className="px-2 py-1 rounded-md bg-slate-100 text-slate-600 border border-slate-200 text-xs"
                                                     >
                                                         {tech}
                                                     </span>
                                                 ))}
                                                 {website.technologies.length > 3 && (
-                                                    <span className="px-2 py-1 rounded-md bg-white/5 text-slate-400 text-xs">
+                                                    <span className="px-2 py-1 rounded-md bg-slate-100 text-slate-600 border border-slate-200 text-xs">
                                                         +{website.technologies.length - 3}
                                                     </span>
                                                 )}

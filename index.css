@@ -5,11 +5,11 @@
   --color-primaryDark: #0284c7;
   --color-secondary: #8b5cf6;
   --color-accent: #f43f5e;
-  --color-dark: #0f172a;
-  --color-darker: #020617;
-  --color-surface: #1e293b;
-  --color-textMain: #f1f5f9;
-  --color-textMuted: #94a3b8;
+  --color-dark: #ffffff;
+  --color-darker: #f8fafc;
+  --color-surface: #f1f5f9;
+  --color-textMain: #0f172a;
+  --color-textMuted: #64748b;
 
   --font-sans: Inter, sans-serif;
   --font-display: Outfit, sans-serif;
@@ -49,11 +49,11 @@
   }
 }
 
-/* Glassmorphism Utilities */
+/* Glassmorphism Utilities — Light Mode */
 .glass {
-  @apply bg-white/5 backdrop-blur-lg border border-white/10;
+  @apply bg-white/70 backdrop-blur-lg border border-slate-200;
 }
 
 .glass-card {
-  @apply bg-surface/50 backdrop-blur-md border border-white/5 hover:border-primary/50 transition-all duration-300;
+  @apply bg-white border border-slate-200 shadow-sm hover:border-primary/50 hover:shadow-md transition-all duration-300;
 }

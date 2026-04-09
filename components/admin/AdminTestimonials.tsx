@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import { Trash2, Edit2, Plus, Loader2, X, Star } from 'lucide-react';
+import { useToast } from '../ui/Toast';
 
 interface Testimonial {
     id: number;
@@ -23,6 +24,7 @@ const AdminTestimonials: React.FC = () => {
         rating: 5,
         avatar_url: ''
     });
+    const { addToast } = useToast();
 
     useEffect(() => {
         fetchTestimonials();
@@ -66,9 +68,10 @@ const AdminTestimonials: React.FC = () => {
 
             await fetchTestimonials();
             resetForm();
+            addToast('Testimonial saved successfully', 'success');
         } catch (error) {
             console.error('Error saving testimonial:', error);
-            alert('Failed to save testimonial');
+            addToast('Failed to save testimonial', 'error');
         } finally {
             setLoading(false);
         }
@@ -97,9 +100,10 @@ const AdminTestimonials: React.FC = () => {
 
             if (error) throw error;
             setTestimonials(testimonials.filter(t => t.id !== id));
+            addToast('Testimonial deleted', 'success');
         } catch (error) {
             console.error('Error deleting testimonial:', error);
-            alert('Failed to delete testimonial');
+            addToast('Failed to delete testimonial', 'error');
         }
     };
 

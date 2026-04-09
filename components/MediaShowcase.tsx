@@ -109,10 +109,10 @@ const MediaShowcase: React.FC = () => {
                             <Film className="w-4 h-4" />
                             Media Showcase
                         </div>
-                        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                        <h2 className="text-3xl md:text-4xl font-bold text-textMain mb-4">
                             Lihat <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-primary">Karya</span> Saya
                         </h2>
-                        <p className="text-slate-400 max-w-2xl mx-auto">
+                        <p className="text-textMuted max-w-2xl mx-auto">
                             Video, GIF, dan konten kreatif yang menunjukkan perjalanan saya sebagai digital creator.
                         </p>
                     </div>
@@ -184,9 +184,9 @@ const MediaShowcase: React.FC = () => {
                                     </div>
 
                                     {/* Content */}
-                                    <div className="p-5">
-                                        <h3 className="text-lg font-bold text-white mb-2">{item.title}</h3>
-                                        <p className="text-slate-400 text-sm mb-4 line-clamp-2">{item.description}</p>
+                                    <div className="p-5 bg-white/10 dark:bg-transparent">
+                                        <h3 className="text-lg font-bold text-textMain mb-2">{item.title}</h3>
+                                        <p className="text-textMuted text-sm mb-4 line-clamp-2">{item.description}</p>
 
                                         {item.external_link && (
                                             <a

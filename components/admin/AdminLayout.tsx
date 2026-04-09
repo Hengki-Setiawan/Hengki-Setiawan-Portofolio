@@ -15,58 +15,93 @@ import {
     Award,
     Menu,
     X,
-    Home,
     Info,
-    Trophy,
-    Calendar,
     Film,
     Globe,
     Zap,
     FileText,
     Rocket,
     BookOpen,
-    Mail
+    Mail,
+    ChevronDown,
+    ChevronRight,
 } from 'lucide-react';
+
+interface MenuGroup {
+    label: string;
+    items: { icon: any; label: string; path: string; badge?: number }[];
+}
 
 const AdminLayout: React.FC = () => {
     const { signOut } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({
+        'Content': true,
+        'Showcase': true,
+        'Publishing': true,
+        'Communication': true,
+        'Settings': true,
+    });
 
     const handleSignOut = async () => {
         await signOut();
         navigate('/admin/login');
     };
 
-    const menuItems = [
-        { icon: LayoutDashboard, label: 'Dashboard', path: '/admin' },
-        { icon: User, label: 'Profil', path: '/admin/profile' },
-        { icon: Home, label: 'Hero', path: '/admin/hero' },
-        { icon: Info, label: 'About', path: '/admin/about' },
-        { icon: BarChart3, label: 'Stats', path: '/admin/stats' },
-        { icon: Trophy, label: 'Achievements', path: '/admin/achievements' },
-        { icon: Film, label: 'Media', path: '/admin/media' },
-        { icon: Globe, label: 'Websites', path: '/admin/websites' },
-        { icon: Layers, label: 'Services', path: '/admin/services' },
-        { icon: Award, label: 'Experience', path: '/admin/experience' },
-        { icon: HelpCircle, label: 'FAQ', path: '/admin/faq' },
-        { icon: Briefcase, label: 'Projects', path: '/admin/projects' },
-        { icon: Zap, label: 'Skills', path: '/admin/skills' },
-        { icon: Rocket, label: 'Ventures', path: '/admin/ventures' },
-        { icon: FileText, label: 'CV / Resume', path: '/admin/cv' },
-        { icon: Quote, label: 'Testimonials', path: '/admin/testimonials' },
-        { icon: BookOpen, label: 'Buku Tamu', path: '/admin/guestbook' },
-        { icon: FileText, label: 'Artikel', path: '/admin/articles' },
-        { icon: Mail, label: 'Messages', path: '/admin/messages' },
-        { icon: Users, label: 'Subscribers', path: '/admin/subscribers' },
+    const menuGroups: MenuGroup[] = [
+        {
+            label: 'Content',
+            items: [
+                { icon: User, label: 'Profile & Hero', path: '/admin/profile' },
+                { icon: Info, label: 'About', path: '/admin/about' },
+                { icon: Award, label: 'Experience', path: '/admin/experience' },
+                { icon: Zap, label: 'Skills', path: '/admin/skills' },
+            ],
+        },
+        {
+            label: 'Showcase',
+            items: [
+                { icon: Briefcase, label: 'Projects', path: '/admin/projects' },
+                { icon: Globe, label: 'Websites', path: '/admin/websites' },
+                { icon: Film, label: 'Media', path: '/admin/media' },
+                { icon: Rocket, label: 'Ventures', path: '/admin/ventures' },
+            ],
+        },
+        {
+            label: 'Publishing',
+            items: [
+                { icon: BookOpen, label: 'Articles', path: '/admin/articles' },
+                { icon: Quote, label: 'Testimonials', path: '/admin/testimonials' },
+            ],
+        },
+        {
+            label: 'Communication',
+            items: [
+                { icon: Mail, label: 'Messages', path: '/admin/messages' },
+                { icon: Users, label: 'Subscribers', path: '/admin/subscribers' },
+                { icon: MessageSquare, label: 'Guestbook', path: '/admin/guestbook' },
+            ],
+        },
+        {
+            label: 'Settings',
+            items: [
+                { icon: BarChart3, label: 'Stats', path: '/admin/stats' },
+                { icon: FileText, label: 'CV / Resume', path: '/admin/cv' },
+                { icon: HelpCircle, label: 'FAQ', path: '/admin/faq' },
+                { icon: Layers, label: 'Services', path: '/admin/services' },
+            ],
+        },
     ];
 
     const isActive = (path: string) => {
-        if (path === '/admin') {
-            return location.pathname === '/admin';
-        }
+        if (path === '/admin') return location.pathname === '/admin';
         return location.pathname.startsWith(path);
+    };
+
+    const toggleGroup = (label: string) => {
+        setExpandedGroups(prev => ({ ...prev, [label]: !prev[label] }));
     };
 
     const handleNavClick = () => {
@@ -104,34 +139,80 @@ const AdminLayout: React.FC = () => {
                 {/* Header */}
                 <div className="p-6 border-b border-slate-100">
                     <h2 className="text-2xl font-bold text-slate-900">Admin</h2>
-                    <p className="text-sm text-slate-500">Dashboard</p>
+                    <p className="text-sm text-slate-500">Portfolio CMS</p>
                 </div>
 
                 {/* Navigation - scrollable */}
-                <nav className="flex-1 overflow-y-auto p-4 space-y-1">
-                    {menuItems.map((item) => (
-                        <Link
-                            key={item.path}
-                            to={item.path}
-                            onClick={handleNavClick}
-                            className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive(item.path)
-                                ? 'bg-primary text-white'
-                                : 'text-slate-600 hover:bg-primary/10 hover:text-primary'
-                                }`}
-                        >
-                            <item.icon className="w-5 h-5" />
-                            <span>{item.label}</span>
-                        </Link>
+                <nav className="flex-1 overflow-y-auto p-3 space-y-1">
+                    {/* Dashboard (always visible) */}
+                    <Link
+                        to="/admin"
+                        onClick={handleNavClick}
+                        className={`flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors ${isActive('/admin') && location.pathname === '/admin'
+                            ? 'bg-primary text-white'
+                            : 'text-slate-600 hover:bg-primary/10 hover:text-primary'
+                        }`}
+                    >
+                        <LayoutDashboard className="w-5 h-5" />
+                        <span className="font-medium">Dashboard</span>
+                    </Link>
+
+                    {/* Grouped Menu Items */}
+                    {menuGroups.map((group) => (
+                        <div key={group.label} className="mt-3">
+                            <button
+                                onClick={() => toggleGroup(group.label)}
+                                className="flex items-center justify-between w-full px-4 py-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider hover:text-slate-600 transition-colors"
+                            >
+                                {group.label}
+                                {expandedGroups[group.label]
+                                    ? <ChevronDown className="w-3.5 h-3.5" />
+                                    : <ChevronRight className="w-3.5 h-3.5" />
+                                }
+                            </button>
+                            {expandedGroups[group.label] && (
+                                <div className="mt-1 space-y-0.5">
+                                    {group.items.map((item) => (
+                                        <Link
+                                            key={item.path}
+                                            to={item.path}
+                                            onClick={handleNavClick}
+                                            className={`flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors text-sm ${isActive(item.path)
+                                                ? 'bg-primary text-white'
+                                                : 'text-slate-600 hover:bg-primary/10 hover:text-primary'
+                                            }`}
+                                        >
+                                            <item.icon className="w-4 h-4" />
+                                            <span>{item.label}</span>
+                                            {item.badge && item.badge > 0 && (
+                                                <span className="ml-auto bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                                                    {item.badge}
+                                                </span>
+                                            )}
+                                        </Link>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
                     ))}
                 </nav>
 
                 {/* Logout Button - fixed at bottom */}
                 <div className="p-4 border-t border-slate-100">
+                    <a
+                        href="/"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-50 transition-colors mb-2 text-sm"
+                    >
+                        <Globe className="w-4 h-4" />
+                        <span>View Website →</span>
+                    </a>
                     <button
                         onClick={handleSignOut}
-                        className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-500 hover:bg-red-50 transition-colors"
+                        className="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-red-500 hover:bg-red-50 transition-colors text-sm"
                     >
-                        <LogOut className="w-5 h-5" />
+                        <LogOut className="w-4 h-4" />
                         <span>Logout</span>
                     </button>
                 </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
-import { Plus, Trash2, Save, RefreshCw, Loader2, Globe, Upload, GripVertical, Star } from 'lucide-react';
+import { Plus, Trash2, Save, RefreshCw, Loader2, Globe, Upload, GripVertical, Star, DownloadCloud } from 'lucide-react';
 import { useToast } from '../ui/Toast';
 
 interface Website {
@@ -158,6 +158,144 @@ const AdminWebsites: React.FC = () => {
         }
     };
 
+    const handleImportProjects = async () => {
+        setLoading(true);
+        try {
+            const generateThumbnail = (url: string) => `https://image.thum.io/get/width/1200/crop/800/noanimate/${url}`;
+            const targetProjects: Omit<Website, 'id'>[] = [
+                {
+                    title: 'Kaos Kami',
+                    description: 'E-Commerce store brand apparel Kaos Kami dengan antarmuka yang clean dan responsif untuk memaksimalkan konversi.',
+                    url: 'https://www.kaoskami.biz.id/',
+                    thumbnail_url: generateThumbnail('https://www.kaoskami.biz.id/'),
+                    category: 'ecommerce',
+                    technologies: ['React', 'Next.js', 'Tailwind CSS'],
+                    status: 'live',
+                    featured: true,
+                    order_index: 101,
+                    is_active: true
+                },
+                {
+                    title: 'MoodLab',
+                    description: 'Digital Agency & Services platform. Menawarkan layanan profesional di bidang web & creative.',
+                    url: 'https://www.moodlab.web.id/',
+                    thumbnail_url: generateThumbnail('https://www.moodlab.web.id/'),
+                    category: 'corporate',
+                    technologies: ['React', 'TypeScript', 'Framer Motion'],
+                    status: 'live',
+                    featured: true,
+                    order_index: 102,
+                    is_active: true
+                },
+                {
+                    title: 'Simbis Data',
+                    description: 'Sistem Informasi Bisnis dan Data terpadu. Membantu pengelolaan metrik operasional perusahaan.',
+                    url: 'https://simbisdata.vercel.app/',
+                    thumbnail_url: generateThumbnail('https://simbisdata.vercel.app/'),
+                    category: 'corporate',
+                    technologies: ['React', 'Supabase', 'Vite'],
+                    status: 'live',
+                    featured: true,
+                    order_index: 103,
+                    is_active: true
+                },
+                {
+                    title: 'Absen Cryptogen',
+                    description: 'Aplikasi Absensi digital untuk karyawan & tim berbasis web dengan validasi keamanan tinggi.',
+                    url: 'https://absen-cryptogen.vercel.app/',
+                    thumbnail_url: generateThumbnail('https://absen-cryptogen.vercel.app/'),
+                    category: 'other',
+                    technologies: ['React', 'Tailwind CSS', 'PostgreSQL'],
+                    status: 'live',
+                    featured: false,
+                    order_index: 104,
+                    is_active: true
+                },
+                {
+                    title: 'Prediksi MCGG',
+                    description: 'Tools analitik & prediksi data untuk parameter MCGG. Menggunakan algoritma probabilitas real-time.',
+                    url: 'https://prediksi-mcgg-phi.vercel.app/',
+                    thumbnail_url: generateThumbnail('https://prediksi-mcgg-phi.vercel.app/'),
+                    category: 'other',
+                    technologies: ['React', 'Vite', 'Algorithm'],
+                    status: 'live',
+                    featured: false,
+                    order_index: 105,
+                    is_active: true
+                },
+                {
+                    title: 'Pilih Pilih',
+                    description: 'Aplikasi pemungutan suara (Voting System) dan seleksi opsi cerdas berbasis UI yang intuitif.',
+                    url: 'https://pilihpilih.vercel.app/',
+                    thumbnail_url: generateThumbnail('https://pilihpilih.vercel.app/'),
+                    category: 'other',
+                    technologies: ['React', 'Tailwind', 'Firebase'],
+                    status: 'live',
+                    featured: false,
+                    order_index: 106,
+                    is_active: true
+                },
+                {
+                    title: 'Edu Panca Indra',
+                    description: 'Aplikasi pembelajaran interaktif untuk siswa mengenai Panca Indra manusia dengan media visual.',
+                    url: 'https://aplikasi-belajar-panca-indra.vercel.app/',
+                    thumbnail_url: generateThumbnail('https://aplikasi-belajar-panca-indra.vercel.app/'),
+                    category: 'other',
+                    technologies: ['React Native Web', 'CSS', 'Framer'],
+                    status: 'live',
+                    featured: true,
+                    order_index: 107,
+                    is_active: true
+                },
+                {
+                    title: 'SCM Aneka Baut',
+                    description: 'Dashboard Supply Chain Management terintegrasi khusus untuk inventarisasi dan logistik rantai pasok.',
+                    url: 'https://scm-aneka-baut.vercel.app/dashboard',
+                    thumbnail_url: generateThumbnail('https://scm-aneka-baut.vercel.app/'),
+                    category: 'corporate',
+                    technologies: ['React', 'Recharts', 'Supabase'],
+                    status: 'live',
+                    featured: true,
+                    order_index: 108,
+                    is_active: true
+                },
+                {
+                    title: 'ENG Video Downloader',
+                    description: 'Utility downloader video berkecepatan tinggi dengan antarmuka UX yang dioptimalkan.',
+                    url: 'https://eng-video-downloader.vercel.app/',
+                    thumbnail_url: generateThumbnail('https://eng-video-downloader.vercel.app/'),
+                    category: 'other',
+                    technologies: ['Next.js', 'API Integration'],
+                    status: 'live',
+                    featured: false,
+                    order_index: 109,
+                    is_active: true
+                },
+                {
+                    title: 'CareerPath ID',
+                    description: 'Platform roadmap karir dan perencanaan profesional bagi talenta digital Indonesia.',
+                    url: 'https://careerpath-id.vercel.app/',
+                    thumbnail_url: generateThumbnail('https://careerpath-id.vercel.app/'),
+                    category: 'landing',
+                    technologies: ['React', 'Vite', 'Tailwind CSS'],
+                    status: 'live',
+                    featured: true,
+                    order_index: 110,
+                    is_active: true
+                }
+            ];
+
+            const { error } = await supabase.from('websites').upsert(targetProjects, { onConflict: 'url' });
+            if (error) throw error;
+            
+            showToast('10 Proyek Website Import Berhasil!', 'success');
+            fetchWebsites();
+        } catch (err: any) {
+            showToast(err.message || 'Gagal mengeksekusi Import', 'error');
+            setLoading(false);
+        }
+    };
+
     if (loading) {
         return (
             <div className="flex items-center justify-center h-64">
@@ -180,6 +318,13 @@ const AdminWebsites: React.FC = () => {
                     >
                         <RefreshCw className="w-4 h-4" />
                         Refresh
+                    </button>
+                    <button
+                        onClick={handleImportProjects}
+                        className="flex items-center gap-2 px-4 py-2 text-indigo-600 bg-indigo-50 border border-indigo-200 rounded-lg hover:bg-indigo-100"
+                    >
+                        <DownloadCloud className="w-4 h-4" />
+                        Import 10 Projects
                     </button>
                     <button
                         onClick={handleAdd}

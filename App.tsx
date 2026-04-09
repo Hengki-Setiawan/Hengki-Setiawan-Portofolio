@@ -5,27 +5,23 @@ import { AuthProvider } from './lib/auth';
 import { ToastProvider } from './components/ui/Toast';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import Stats from './components/Stats';
 import About from './components/About';
 import Skills from './components/Skills';
-import Connect from './components/Connect';
+import Communities from './components/Communities';
+import OnlineStore from './components/OnlineStore';
+import FeaturedProjects from './components/FeaturedProjects';
+import ContactCTA from './components/ContactCTA';
 import TechStack from './components/TechStack';
 import Footer from './components/Footer';
-import N8nChatWidget from './components/N8nChatWidget';
 import BackToTop from './components/ui/BackToTop';
-import ScrollProgress from './components/ui/ScrollProgress';
-import LoadingScreen from './components/ui/LoadingScreen';
-import SocialProofBar from './components/SocialProofBar';
 import SEO from './components/SEO';
 import PageTransition from './components/PageTransition';
-import CustomCursor from './components/ui/CustomCursor';
-import ParticlesBackground from './components/ui/ParticlesBackground';
+import AIChatbot from './components/AIChatbot';
 
 // Pages
-const ServicesPage = React.lazy(() => import('./pages/ServicesPage'));
 const ExperiencePage = React.lazy(() => import('./pages/ExperiencePage'));
-const WebsitesPage = React.lazy(() => import('./pages/WebsitesPage'));
 const ContactPage = React.lazy(() => import('./pages/ContactPage'));
+const ProjectsPage = React.lazy(() => import('./pages/ProjectsPage'));
 const ProjectDetailPage = React.lazy(() => import('./pages/ProjectDetailPage'));
 const CVPage = React.lazy(() => import('./pages/CVPage'));
 const GuestbookPage = React.lazy(() => import('./pages/GuestbookPage'));
@@ -42,7 +38,7 @@ const AdminProfile = React.lazy(() => import('./components/admin/AdminProfile'))
 const AdminServices = React.lazy(() => import('./components/admin/AdminServices'));
 const AdminFAQ = React.lazy(() => import('./components/admin/AdminFAQ'));
 const AdminExperience = React.lazy(() => import('./components/admin/AdminExperience'));
-const AdminHero = React.lazy(() => import('./components/admin/AdminHero'));
+
 const AdminAbout = React.lazy(() => import('./components/admin/AdminAbout'));
 const AdminLogin = React.lazy(() => import('./components/admin/AdminLogin'));
 const AdminLayout = React.lazy(() => import('./components/admin/AdminLayout'));
@@ -56,29 +52,27 @@ const AdminSkills = React.lazy(() => import('./components/admin/AdminSkills'));
 const AdminCV = React.lazy(() => import('./components/admin/AdminCV'));
 const AdminGuestbook = React.lazy(() => import('./components/admin/AdminGuestbook'));
 const AdminArticles = React.lazy(() => import('./components/admin/AdminArticles'));
+const AdminVentures = React.lazy(() => import('./components/admin/AdminVentures'));
 
-// HomePage - combines Home + About
+// HomePage — clean, minimalist, light mode
 const HomePage = () => (
   <>
     <SEO
       title="Home"
-      description="Hengki Setiawan - Web Developer, Digital Creator, and Community Builder. Explore my portfolio and projects."
+      description="Hengki Setiawan - Digital Entrepreneur & Web Developer. Membangun komunitas 500K+ dan brand e-commerce."
     />
-    <LoadingScreen />
-    <CustomCursor />
-    <ScrollProgress />
     <PageTransition>
       <main className="min-h-screen bg-dark text-textMain font-sans selection:bg-primary/30 selection:text-primary">
         <Navbar />
         <Hero />
-        <TechStack />
-        <Stats />
         <About />
         <Skills />
-        <Connect />
+        <FeaturedProjects />
+        <Communities />
+        <OnlineStore />
+        <ContactCTA />
         <Footer />
         <BackToTop />
-        <SocialProofBar />
       </main>
     </PageTransition>
   </>
@@ -90,18 +84,21 @@ const App: React.FC = () => {
       <AuthProvider>
         <ToastProvider>
           <BrowserRouter>
-            <Suspense fallback={<LoadingScreen />}>
+            <Suspense fallback={
+              <div className="min-h-screen bg-white flex items-center justify-center">
+                <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+              </div>
+            }>
               <Routes>
                 {/* Public Pages */}
                 <Route path="/" element={<HomePage />} />
-                <Route path="/services" element={<ServicesPage />} />
                 <Route path="/experience" element={<ExperiencePage />} />
-                <Route path="/websites" element={<WebsitesPage />} />
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/guestbook" element={<GuestbookPage />} />
                 <Route path="/blog" element={<BlogPage />} />
                 <Route path="/blog/:slug" element={<ArticlePage />} />
                 <Route path="/cv" element={<CVPage />} />
+                <Route path="/projects" element={<ProjectsPage />} />
                 <Route path="/projects/:id" element={<ProjectDetailPage />} />
                 {/* Admin Routes */}
                 <Route path="/admin/login" element={<AdminLogin />} />
@@ -115,7 +112,7 @@ const App: React.FC = () => {
                 >
                   <Route index element={<AdminDashboard />} />
                   <Route path="profile" element={<AdminProfile />} />
-                  <Route path="hero" element={<AdminHero />} />
+                  {/* AdminHero merged into AdminProfile */}
                   <Route path="about" element={<AdminAbout />} />
                   <Route path="stats" element={<AdminStats />} />
                   <Route path="services" element={<AdminServices />} />
@@ -129,6 +126,7 @@ const App: React.FC = () => {
                   <Route path="media" element={<AdminMediaShowcase />} />
                   <Route path="websites" element={<AdminWebsites />} />
                   <Route path="skills" element={<AdminSkills />} />
+                  <Route path="ventures" element={<AdminVentures />} />
                   <Route path="cv" element={<AdminCV />} />
                   <Route path="guestbook" element={<AdminGuestbook />} />
                   <Route path="articles" element={<AdminArticles />} />
@@ -138,8 +136,7 @@ const App: React.FC = () => {
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </Suspense>
-            <N8nChatWidget />
-            <ParticlesBackground />
+            <AIChatbot />
           </BrowserRouter>
         </ToastProvider>
       </AuthProvider>

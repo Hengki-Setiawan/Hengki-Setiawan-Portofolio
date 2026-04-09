@@ -20,9 +20,8 @@ const Navbar: React.FC = () => {
 
   const navLinks = [
     { name: t('nav.home'), href: '/' },
-    { name: t('nav.portfolio'), href: '/services' },
+    { name: 'Project', href: '/projects' },
     { name: t('nav.experience'), href: '/experience' },
-    { name: t('nav.websites'), href: '/websites' },
     { name: t('nav.blog'), href: '/blog' },
   ];
 
@@ -31,15 +30,15 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-dark/80 backdrop-blur-md shadow-lg border-b border-white/5 py-2' : 'bg-transparent py-4'}`}>
+    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white/90 backdrop-blur-md shadow-sm border-b border-slate-200 py-2' : 'bg-transparent py-4'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-12">
           <div className="flex-shrink-0">
             <Link to="/" className="flex items-center gap-2 group">
               <div className="p-1 transition-all duration-300 hover:scale-110">
-                <img src="/images/logo-neco.png" alt="Logo" className="h-10 w-10 object-contain invert drop-shadow-[0_0_5px_rgba(255,255,255,0.5)]" />
+                <img src="/images/logo-neco.png" alt="Logo" className="h-10 w-10 object-contain drop-shadow-sm" />
               </div>
-              <span className="font-bold text-xl tracking-tight text-white">
+              <span className="font-bold text-xl tracking-tight text-textMain">
                 Hengki<span className="text-primary">.Setiawan</span>
               </span>
             </Link>
@@ -51,7 +50,7 @@ const Navbar: React.FC = () => {
                 <Link
                   key={link.name}
                   to={link.href}
-                  className={`text-sm font-medium transition-colors cursor-pointer relative group ${isActive(link.href) ? 'text-primary' : 'text-slate-300 hover:text-white'
+                  className={`text-sm font-medium transition-colors cursor-pointer relative group ${isActive(link.href) ? 'text-primary' : 'text-slate-500 hover:text-textMain'
                     }`}
                 >
                   {link.name}
@@ -73,7 +72,7 @@ const Navbar: React.FC = () => {
             <LanguageSwitcher />
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-slate-300 hover:text-white hover:bg-white/10 focus:outline-none"
+              className="inline-flex items-center justify-center p-2 rounded-md text-slate-500 hover:text-textMain hover:bg-slate-100 focus:outline-none"
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -82,7 +81,7 @@ const Navbar: React.FC = () => {
       </div>
 
       {/* Mobile menu */}
-      <div className={`md:hidden absolute w-full bg-surface border-b border-white/10 shadow-xl transition-all duration-300 ease-in-out ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible h-0 overflow-hidden'}`}>
+      <div className={`md:hidden absolute w-full bg-white border-b border-slate-200 shadow-xl transition-all duration-300 ease-in-out ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible h-0 overflow-hidden'}`}>
         <div className="px-4 pt-2 pb-6 space-y-2">
           {navLinks.map((link) => (
             <Link
@@ -91,7 +90,7 @@ const Navbar: React.FC = () => {
               onClick={() => setIsOpen(false)}
               className={`block px-3 py-3 rounded-md text-base font-medium cursor-pointer ${isActive(link.href)
                 ? 'text-primary bg-primary/10'
-                : 'text-slate-300 hover:text-white hover:bg-white/5'
+                : 'text-slate-600 hover:text-textMain hover:bg-slate-50'
                 }`}
             >
               {link.name}
