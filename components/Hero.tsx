@@ -26,14 +26,7 @@ const Hero: React.FC = () => {
 
           {/* Left Column: Text Content */}
           <div className="w-full md:w-1/2 text-center md:text-left order-2 md:order-1">
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary font-medium text-sm mb-6"
-            >
-              🚀 Digital Entrepreneur & Developer
-            </motion.div>
+
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
